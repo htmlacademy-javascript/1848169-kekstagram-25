@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Рустем Асфандияров](https://up.htmlacademy.ru/javascript/25/user/1848169).
-* Наставник: `Максим Прусаков`.
+* Наставник: [Максим Прусаков](https://htmlacademy.ru/profile/hikikomori).
 
 ---
 
