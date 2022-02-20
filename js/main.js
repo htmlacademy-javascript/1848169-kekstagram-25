@@ -1,5 +1,5 @@
 //Функция, возвращающая случайное целое число из переданного диапазона включительно
-function getRandom(min, max) {
+const getRandom = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   if(min < 0) {
@@ -12,18 +12,11 @@ function getRandom(min, max) {
     max = min;
   }
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 getRandom(1, 100);
 
 // Функция для проверки максимальной длины строки. Будет использоваться для проверки длины введённого комментария, но должна быть универсальна
-function getLenght(stringChecked, maxLenght) {
-  if (stringChecked.length <= maxLenght) {
-    return true;
-  }
-  return false;
-}
-
-getLenght('Проверка',12);
-
+const getLength = (stringChecked, maxLength) => stringChecked.length <= maxLength;
+getLength('Проверка', 24);
 
