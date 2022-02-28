@@ -21,9 +21,7 @@ const getLength = (stringChecked, maxLength) => stringChecked.length <= maxLengt
 
 getLength('Проверка', 24);
 
-// В файле main.js на основе написанных по заданию ранее вспомогательных функций
-// напишите необходимые функции для создания массива из 25 сгенерированных объектов.
-// Каждый объект массива — описание фотографии, опубликованной пользователем.
+//Создаем массив комментариев
 
 const COMMENTS = [
   'Всё отлично!',
@@ -34,6 +32,7 @@ const COMMENTS = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
+//Создаем массив имен
 const NAMES = [
   'Антон',
   'Мария',
@@ -46,37 +45,38 @@ const NAMES = [
 ];
 
 // Создадим массив comments - список комментариев
+const getRandomAvatar = (elements) => elements[getRandom(1, 6)];
+const getRandomMessage = (message) => message[getRandom(0, COMMENTS.length - 1)];
+const getRandomNames = (names) => names[getRandom(0, NAMES.length - 1)];
+const getRandomIde = (ide) => ide[getRandom(1, 50)];
+
+
 const createMessage = () => {
-  const randomId = getRandom(1, 50);
-  const randomAvatar = getRandom(1, 6);
-  const randomMessage = getRandom(0, 5);
-  const randomName = getRandom(0, 7);
-  return {
-    id: randomId,
-    avatar: 'img/avatar-' + randomAvatar + '.svg',
-    message: randomMessage(COMMENTS),
-    name: randomName(NAMES),
+   return {
+    id: getRandomIde,
+    avatar: 'img/avatar-' + getRandomAvatar + '.svg',
+    message: getRandomMessage(COMMENTS),
+    name: getRandomNames(NAMES),
   };
 };
-const commentsArray = Array.from({length: getRandom(0, 5)}, createMessage);
+
+const commentsArray = Array.from({length: 6}, createMessage);
 createMessage();
 commentsArray();
 
 // Создание массива из 25 сгенерированных объектов
-
+const getRandomId = (idNumber) => idNumber[getRandom(1, 25)];
+const getRandomUrl = (urlnumber) => urlnumber[getRandom(1, 25)];
+const getRandomLikes = (likesnumber) => likesnumber[getRandom(15, 200)];
 const createObject = () => {
-  const randomId = getRandom(1, 25);
-  const randomUrl = getRandom(1, 25);
-  const randomLikes = getRandom(15, 200);
   return {
-    id: randomId,
-    url: 'photos/' + randomUrl + '.jpg',
+    id: getRandomId,
+    url: 'photos/' + getRandomUrl + '.jpg',
     description: 'Фото пользователя',
-    likes: randomLikes,
+    likes: likesnumber,
     comments: createMessage(),
   };
 };
-
 const photoArray = Array.from({length: 25}, createObject);
 photoArray();
 createObject();
