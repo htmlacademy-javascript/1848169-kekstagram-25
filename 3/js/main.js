@@ -44,39 +44,38 @@ const NAMES = [
   'Святослав',
 ];
 
-// Создадим массив comments - список комментариев
-const getRandomAvatar = (elements) => elements[getRandom(1, 6)];
-const getRandomMessage = (message) => message[getRandom(0, COMMENTS.length - 1)];
-const getRandomNames = (names) => names[getRandom(0, NAMES.length - 1)];
-const getRandomIde = (ide) => ide[getRandom(1, 50)];
-
 
 const createMessage = () => {
-   return {
-    id: getRandomIde,
-    avatar: 'img/avatar-' + getRandomAvatar + '.svg',
-    message: getRandomMessage(COMMENTS),
-    name: getRandomNames(NAMES),
+  const randomId = getRandom(1, 50);
+  const randomAvatar = getRandom(1, 6);
+  const randomComments = getRandom(0, COMMENTS.length - 1);
+  const randomNames = getRandom(0, NAMES.length - 1);
+  return {
+    id: randomId,
+    avatar: `img/avatar- ${randomAvatar}.svg`,
+    message: COMMENTS[randomComments],
+    name: NAMES[randomNames],
   };
 };
 
-const commentsArray = Array.from({length: 6}, createMessage);
+const commentsArray = Array.from({length: NAMES}, createMessage);
 createMessage();
 commentsArray();
 
 // Создание массива из 25 сгенерированных объектов
-const getRandomId = (idNumber) => idNumber[getRandom(1, 25)];
-const getRandomUrl = (urlnumber) => urlnumber[getRandom(1, 25)];
-const getRandomLikes = (likesnumber) => likesnumber[getRandom(15, 200)];
+
 const createObject = () => {
+  const randomIde = getRandom(1, 25);
+  const randomUrl = getRandom(1, 25);
+  const randomLikes = getRandom(15, 200);
   return {
-    id: getRandomId,
-    url: 'photos/' + getRandomUrl + '.jpg',
+    id: randomIde,
+    url: `photos/${  randomUrl  }.jpg`,
     description: 'Фото пользователя',
-    likes: likesnumber,
-    comments: createMessage(),
+    likes: randomLikes,
+    comments: commentsArray(),
   };
 };
 const photoArray = Array.from({length: 25}, createObject);
 photoArray();
-createObject();
+
