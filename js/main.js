@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 //Функция, возвращающая случайное целое число из переданного диапазона включительно
 const getRandom = (min, max) => {
   min = Math.ceil(min);
@@ -44,7 +46,7 @@ const NAMES = [
   'Святослав',
 ];
 
-
+//Функция генерации сообщений
 const createMessage = () => {
   const randomId = getRandom(1, 50);
   const randomAvatar = getRandom(1, 6);
@@ -52,30 +54,32 @@ const createMessage = () => {
   const randomNames = getRandom(0, NAMES.length - 1);
   return {
     id: randomId,
-    avatar: `img/avatar- ${randomAvatar}.svg`,
+    avatar: `img/avatar-${randomAvatar}.svg`,
     message: COMMENTS[randomComments],
     name: NAMES[randomNames],
   };
 };
-
-const commentsArray = Array.from({length: NAMES}, createMessage);
-createMessage();
-commentsArray();
-
+//Создание массива объектов комментариев
+const getArrayComments = () => {
+  const randomComments = getRandom(1, COMMENTS.length);
+  const commentsArray = Array.from({length: randomComments}, createMessage);
+  return commentsArray;
+};
 // Создание массива из 25 сгенерированных объектов
 
-const createObject = () => {
+function createObject() {
   const randomIde = getRandom(1, 25);
   const randomUrl = getRandom(1, 25);
   const randomLikes = getRandom(15, 200);
   return {
     id: randomIde,
-    url: `photos/${  randomUrl  }.jpg`,
+    url: `photos/${randomUrl}.jpg`,
     description: 'Фото пользователя',
     likes: randomLikes,
-    comments: commentsArray(),
+    comments: getArrayComments(),
   };
-};
+}
+
 const photoArray = Array.from({length: 25}, createObject);
-photoArray();
+createObject();
 
