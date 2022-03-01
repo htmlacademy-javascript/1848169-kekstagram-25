@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-const-assign */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 //Функция, возвращающая случайное целое число из переданного диапазона включительно
@@ -48,7 +50,8 @@ const NAMES = [
 
 //Функция генерации сообщений
 const createMessage = () => {
-  const randomId = getRandom(1, 50);
+//Генерация неповторяющегося ID от 1 до 25
+  const randomId = getRandom(1, 25);
   const randomAvatar = getRandom(1, 6);
   const randomComments = getRandom(0, COMMENTS.length - 1);
   const randomNames = getRandom(0, NAMES.length - 1);
@@ -59,10 +62,11 @@ const createMessage = () => {
     name: NAMES[randomNames],
   };
 };
+
 //Создание массива объектов комментариев
 const getArrayComments = () => {
   const randomComments = getRandom(1, COMMENTS.length);
-  const commentsArray = Array.from({length: randomComments}, createMessage);
+  const commentsArray = Array.from({ length: randomComments }, createMessage);
   return commentsArray;
 };
 // Создание массива из 25 сгенерированных объектов
