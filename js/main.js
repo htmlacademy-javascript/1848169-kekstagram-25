@@ -47,16 +47,18 @@ const NAMES = [
   'Мария',
   'Святослав',
 ];
-
-//Функция генерации сообщений
+  //Генерация неповторяющегося ID от 1 до 25
+const getRandomId = () => getRandom(1, 25);
+const RandomIdArray = Array.from({ length: 25 }, getRandomId);
+const RandomIdSet = [...new Set(RandomIdArray)];//Генератор ID 1..25 без повторений
+const IdNumber = RandomIdSet[1];
+// Функция генерации сообщений
 const createMessage = () => {
-//Генерация неповторяющегося ID от 1 до 25
-  const randomId = getRandom(1, 25);
   const randomAvatar = getRandom(1, 6);
   const randomComments = getRandom(0, COMMENTS.length - 1);
   const randomNames = getRandom(0, NAMES.length - 1);
   return {
-    id: randomId,
+    id: IdNumber,
     avatar: `img/avatar-${randomAvatar}.svg`,
     message: COMMENTS[randomComments],
     name: NAMES[randomNames],
