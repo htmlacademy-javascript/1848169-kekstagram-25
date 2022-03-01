@@ -51,14 +51,18 @@ const NAMES = [
 const getRandomId = () => getRandom(1, 25);
 const RandomIdArray = Array.from({ length: 25 }, getRandomId);
 const RandomIdSet = [...new Set(RandomIdArray)];//Генератор ID 1..25 без повторений
-const IdNumber = RandomIdSet[1];
+const getIdNumber = () => {
+  for (let i = 1; i <= RandomIdSet.length; i++) {
+    return RandomIdSet[i];
+  }
+};
 // Функция генерации сообщений
 const createMessage = () => {
   const randomAvatar = getRandom(1, 6);
   const randomComments = getRandom(0, COMMENTS.length - 1);
   const randomNames = getRandom(0, NAMES.length - 1);
   return {
-    id: IdNumber,
+    id: getIdNumber(),
     avatar: `img/avatar-${randomAvatar}.svg`,
     message: COMMENTS[randomComments],
     name: NAMES[randomNames],
@@ -68,7 +72,7 @@ const createMessage = () => {
 //Создание массива объектов комментариев
 const getArrayComments = () => {
   const randomComments = getRandom(1, COMMENTS.length);
-  const commentsArray = Array.from({ length: randomComments }, createMessage);
+  const commentsArray = Array.from({ length: 2 }, createMessage);
   return commentsArray;
 };
 // Создание массива из 25 сгенерированных объектов
