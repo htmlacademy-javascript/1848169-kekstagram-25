@@ -1,7 +1,4 @@
-/* eslint-disable no-shadow */
-/* eslint-disable no-const-assign */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
+
 //Функция, возвращающая случайное целое число из переданного диапазона включительно
 const getRandom = (min, max) => {
   min = Math.ceil(min);
@@ -48,104 +45,52 @@ const NAMES = [
   'Святослав',
 ];
 
-// Функция генерации сообщений
+//Основные параметры расчетных значений
+const OBJECT_COUNT = 25;
+const minLikes = 15;
+const maxLikes = 200;
+const minId = 1;
+const maxId = 200;
+const minAvatar = 1;
+const maxAvatar = 6;
+//Генерация случайных чисел для программы
 
-const createMessage = () => {
-//Генерация неповторяющегося ID от 1 до 25
-  const getRandomId = () => getRandom(1, 25);
-  const RandomIdArray = Array.from({ length: 25 }, getRandomId); //Генератор ID 1..25 c повторениями
-  const RandomIdSet = [...new Set(RandomIdArray)]; //Генератор ID 1..25 без повторений
-  const getIdNumber = () => {
-    for (let i = 1; i <= RandomIdSet.length; i++) {
-      return RandomIdSet[i];
+//Генерация параметра не повторяющихся чисел
+let x;
+function getRandomNumber(min, max) {
+  const arr = [];
+  for (let i = min; i < max; i++) {
+    x = getRandom(min, max);
+    if (arr.includes(x) === true) {
+      i = i - 1;
+    } else {
+      if (x > max === false) {
+        arr.push(x);
+      }
     }
-  };
-  //Генерация неповторяющегося номера аватара от 1 до 6
-  const getRandomAvatar = () => getRandom(1, 6);
-  const RandomAvatarArray = Array.from({ length: 6 }, getRandomAvatar);
-  const RandomAvatar = [...new Set(RandomAvatarArray)];
-  const getAvatarNumber = () => {
-    for (let i = 1; i <= RandomAvatar.length; i++) {
-      return RandomAvatar[i];
-    }
-  };
-  //Генерация неповторяющегося комментария из массива COMENTS
-  const getRandomComments = () => getRandom(1, COMMENTS.length - 1);
-  const RandomCommentsArray = Array.from({ length: COMMENTS.length - 1}, getRandomComments);
-  const RandomComments = [...new Set(RandomCommentsArray)];
-  const getComentsNumber = () => {
-    for (let i = 1; i <= RandomComments.length; i++) {
-      return RandomComments[i];
-    }
-  };
-  //Генерация неповторяющегося имени из массива NAME
-
-  const getRandomNames = () => getRandom(1, NAMES.length - 1);
-  const RandomNamesArray = Array.from({ length: NAMES.length - 1}, getRandomNames);
-  const RandomNames = [...new Set(RandomNamesArray)];
-  const getNamesNumber = () => {
-    for (let i = 1; i <= NAMES.length - 1; i++) {
-      return RandomNames[i];
-    }
-  };
-  return {
-    id: getIdNumber(),
-    avatar: `img/avatar-${getAvatarNumber()}.svg`,
-    message: COMMENTS[getComentsNumber()],
-    name: NAMES[getNamesNumber()],
-  };
-};
-
-//Создание массива объектов комментариев, т.к. комментариев
-const getArrayComments = () => {
-  // const randomComments = getRandom(1, COMMENTS.length);
-  const commentsArray = Array.from({ length: 2 }, createMessage);
-  return commentsArray;
-};
-// Создание массива из 25 сгенерированных объектов
-
-function createObject() {
-  //Генерация неповторяющегося ID от 1 до 25
-  const getRandomIde = () => getRandom(1, 25);
-  const RandomIdeArray = Array.from({ length: 25}, getRandomIde);
-  const RandomIde = [...new Set(RandomIdeArray)];
-  const getIdeNumber = () => {
-    for (let i = 1; i <= RandomIde.length; i++) {
-      return RandomIde[i];
-    }
-  };
-  //Генерация URL от 1 до 25
-  const getRandomUrl = () => getRandom(1, 25);
-  const RandomUrlArray = Array.from({ length: 25}, getRandomUrl);
-  const RandomUrl = [...new Set(RandomUrlArray)];
-  const getUrlNumber = () => {
-    for (let i = 1; i <= RandomUrl.length; i++) {
-      return RandomUrl[i];
-    }
-  };
-  //Генерация likes от 15 до 200
-  const getRandomLikes = () => getRandom(15, 200);
-  const RandomLikesArray = Array.from({ length: 185}, getRandomLikes);
-  const RandomLikes = [...new Set(RandomLikesArray)];
-  const getLikesNumber = () => {
-    for (let i = 1; i <= RandomLikes.length; i++) {
-      return RandomLikes[i];
-    }
-  };
-  return {
-    id: getRandomIde(),
-    url: `photos/${getRandomUrl()}.jpg`,
-    description: 'Фото пользователя',
-    likes: getRandomLikes(),
-    comments: getArrayComments(),
-  };
+  }
+  return x;
 }
 
-const photoArray = Array.from({length: 25}, createObject); //Массив из 25 объектов
-createObject();
+//Функция формирования основного объекта
+const createRandomAnnouncement = (_elem, id) => ({
+  author: {
+    ID: (++id), //идентификатор описания. Это число от 1 до 25. Идентификаторы не должны повторяться.
+    url: `photos/${String(++id).padStart(2, '0')}.jpg`, //строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
+    description: 'Описание фотографии',
+    likes: getRandomNumber(minLikes, maxLikes), //количество лайков, поставленных фотографии. Случайное число от 15 до 200.
+  },
+  comments: {
+    ID: getRandomNumber(minId, maxId), //id — случайное число. Идентификаторы не должны повторяться.
+    avatar: `img/avatar-${getRandomNumber(minAvatar, maxAvatar)}.svg`, //  img/avatar-{{случайное число от 1 до 6}}.svg
+    message: COMMENTS[getRandomNumber(0, COMMENTS.length-1)], //одно или два случайных предложения из списка
+    name: NAMES[getRandomNumber(0, NAMES.length-1)],
+  }
+});
 
-function createObjectArray() { //Функция создания 25 объектов
-  return photoArray;
-}
-
+const getObjectCount = () =>
+  Array.from({
+    length: OBJECT_COUNT,
+  }, createRandomAnnouncement);
+getObjectCount();
 
