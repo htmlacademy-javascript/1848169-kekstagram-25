@@ -53,9 +53,8 @@ const minId = 1;
 const maxId = 200;
 const minAvatar = 1;
 const maxAvatar = 6;
-//Генерация случайных чисел для программы
 
-//Генерация параметра не повторяющихся чисел
+//Генерация не повторяющихся чисел
 let x;
 function getRandomNumber(min, max) {
   const arr = [];
@@ -87,7 +86,7 @@ const createRandomAnnouncement = (_elem, id) => ({
     name: NAMES[getRandomNumber(0, NAMES.length-1)],
   }
 });
-
+//Функция вывода основного объекта
 const getObjectCount = () =>
   Array.from({
     length: OBJECT_COUNT,
