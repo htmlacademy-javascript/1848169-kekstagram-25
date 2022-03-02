@@ -47,49 +47,105 @@ const NAMES = [
   'Мария',
   'Святослав',
 ];
-  //Генерация неповторяющегося ID от 1 до 25
-const getRandomId = () => getRandom(1, 25);
-const RandomIdArray = Array.from({ length: 25 }, getRandomId);
-const RandomIdSet = [...new Set(RandomIdArray)];//Генератор ID 1..25 без повторений
-const getIdNumber = () => {
-  for (let i = 1; i <= RandomIdSet.length; i++) {
-    return RandomIdSet[i];
-  }
-};
+
 // Функция генерации сообщений
+
 const createMessage = () => {
-  const randomAvatar = getRandom(1, 6);
-  const randomComments = getRandom(0, COMMENTS.length - 1);
-  const randomNames = getRandom(0, NAMES.length - 1);
+//Генерация неповторяющегося ID от 1 до 25
+  const getRandomId = () => getRandom(1, 25);
+  const RandomIdArray = Array.from({ length: 25 }, getRandomId); //Генератор ID 1..25 c повторениями
+  const RandomIdSet = [...new Set(RandomIdArray)]; //Генератор ID 1..25 без повторений
+  const getIdNumber = () => {
+    for (let i = 1; i <= RandomIdSet.length; i++) {
+      return RandomIdSet[i];
+    }
+  };
+  //Генерация неповторяющегося номера аватара от 1 до 6
+  const getRandomAvatar = () => getRandom(1, 6);
+  const RandomAvatarArray = Array.from({ length: 6 }, getRandomAvatar);
+  const RandomAvatar = [...new Set(RandomAvatarArray)];
+  const getAvatarNumber = () => {
+    for (let i = 1; i <= RandomAvatar.length; i++) {
+      return RandomAvatar[i];
+    }
+  };
+  //Генерация неповторяющегося комментария из массива COMENTS
+  const getRandomComments = () => getRandom(1, COMMENTS.length - 1);
+  const RandomCommentsArray = Array.from({ length: COMMENTS.length - 1}, getRandomComments);
+  const RandomComments = [...new Set(RandomCommentsArray)];
+  const getComentsNumber = () => {
+    for (let i = 1; i <= RandomComments.length; i++) {
+      return RandomComments[i];
+    }
+  };
+  //Генерация неповторяющегося имени из массива NAME
+
+  const getRandomNames = () => getRandom(1, NAMES.length - 1);
+  const RandomNamesArray = Array.from({ length: NAMES.length - 1}, getRandomNames);
+  const RandomNames = [...new Set(RandomNamesArray)];
+  const getNamesNumber = () => {
+    for (let i = 1; i <= NAMES.length - 1; i++) {
+      return RandomNames[i];
+    }
+  };
   return {
     id: getIdNumber(),
-    avatar: `img/avatar-${randomAvatar}.svg`,
-    message: COMMENTS[randomComments],
-    name: NAMES[randomNames],
+    avatar: `img/avatar-${getAvatarNumber()}.svg`,
+    message: COMMENTS[getComentsNumber()],
+    name: NAMES[getNamesNumber()],
   };
 };
 
-//Создание массива объектов комментариев
+//Создание массива объектов комментариев, т.к. комментариев
 const getArrayComments = () => {
-  const randomComments = getRandom(1, COMMENTS.length);
+  // const randomComments = getRandom(1, COMMENTS.length);
   const commentsArray = Array.from({ length: 2 }, createMessage);
   return commentsArray;
 };
 // Создание массива из 25 сгенерированных объектов
 
 function createObject() {
-  const randomIde = getRandom(1, 25);
-  const randomUrl = getRandom(1, 25);
-  const randomLikes = getRandom(15, 200);
+  //Генерация неповторяющегося ID от 1 до 25
+  const getRandomIde = () => getRandom(1, 25);
+  const RandomIdeArray = Array.from({ length: 25}, getRandomIde);
+  const RandomIde = [...new Set(RandomIdeArray)];
+  const getIdeNumber = () => {
+    for (let i = 1; i <= RandomIde.length; i++) {
+      return RandomIde[i];
+    }
+  };
+  //Генерация URL от 1 до 25
+  const getRandomUrl = () => getRandom(1, 25);
+  const RandomUrlArray = Array.from({ length: 25}, getRandomUrl);
+  const RandomUrl = [...new Set(RandomUrlArray)];
+  const getUrlNumber = () => {
+    for (let i = 1; i <= RandomUrl.length; i++) {
+      return RandomUrl[i];
+    }
+  };
+  //Генерация likes от 15 до 200
+  const getRandomLikes = () => getRandom(15, 200);
+  const RandomLikesArray = Array.from({ length: 185}, getRandomLikes);
+  const RandomLikes = [...new Set(RandomLikesArray)];
+  const getLikesNumber = () => {
+    for (let i = 1; i <= RandomLikes.length; i++) {
+      return RandomLikes[i];
+    }
+  };
   return {
-    id: randomIde,
-    url: `photos/${randomUrl}.jpg`,
+    id: getRandomIde(),
+    url: `photos/${getRandomUrl()}.jpg`,
     description: 'Фото пользователя',
-    likes: randomLikes,
+    likes: getRandomLikes(),
     comments: getArrayComments(),
   };
 }
 
-const photoArray = Array.from({length: 25}, createObject);
+const photoArray = Array.from({length: 25}, createObject); //Массив из 25 объектов
 createObject();
+
+function createObjectArray() { //Функция создания 25 объектов
+  return photoArray;
+}
+
 
