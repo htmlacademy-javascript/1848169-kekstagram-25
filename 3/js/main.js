@@ -1,3 +1,4 @@
+
 //Функция, возвращающая случайное целое число из переданного диапазона включительно
 const getRandom = (min, max) => {
   min = Math.ceil(min);
@@ -44,38 +45,51 @@ const NAMES = [
   'Святослав',
 ];
 
+//Основные параметры расчетных значений
+const OBJECT_COUNT = 25;
+const minLikes = 15;
+const maxLikes = 200;
+const minId = 1;
+const maxId = 200;
+const minAvatar = 1;
+const maxAvatar = 6;
 
-const createMessage = () => {
-  const randomId = getRandom(1, 50);
-  const randomAvatar = getRandom(1, 6);
-  const randomComments = getRandom(0, COMMENTS.length - 1);
-  const randomNames = getRandom(0, NAMES.length - 1);
-  return {
-    id: randomId,
-    avatar: `img/avatar- ${randomAvatar}.svg`,
-    message: COMMENTS[randomComments],
-    name: NAMES[randomNames],
-  };
-};
+//Генерация не повторяющихся чисел
+let x;
+function getRandomNumber(min, max) {
+  const arr = [];
+  for (let i = min; i < max; i++) {
+    x = getRandom(min, max);
+    if (arr.includes(x) === true) {
+      i = i - 1;
+    } else {
+      if (x > max === false) {
+        arr.push(x);
+      }
+    }
+  }
+  return x;
+}
 
-const commentsArray = Array.from({length: NAMES}, createMessage);
-createMessage();
-commentsArray();
-
-// Создание массива из 25 сгенерированных объектов
-
-const createObject = () => {
-  const randomIde = getRandom(1, 25);
-  const randomUrl = getRandom(1, 25);
-  const randomLikes = getRandom(15, 200);
-  return {
-    id: randomIde,
-    url: `photos/${  randomUrl  }.jpg`,
-    description: 'Фото пользователя',
-    likes: randomLikes,
-    comments: commentsArray(),
-  };
-};
-const photoArray = Array.from({length: 25}, createObject);
-photoArray();
+//Функция формирования основного объекта
+const createRandomAnnouncement = (_elem, id) => ({
+  author: {
+    ID: (++id), //идентификатор описания. Это число от 1 до 25. Идентификаторы не должны повторяться.
+    url: `photos/${String(++id).padStart(2, '0')}.jpg`, //строка — адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
+    description: 'Описание фотографии',
+    likes: getRandomNumber(minLikes, maxLikes), //количество лайков, поставленных фотографии. Случайное число от 15 до 200.
+  },
+  comments: {
+    ID: getRandomNumber(minId, maxId), //id — случайное число. Идентификаторы не должны повторяться.
+    avatar: `img/avatar-${getRandomNumber(minAvatar, maxAvatar)}.svg`, //  img/avatar-{{случайное число от 1 до 6}}.svg
+    message: COMMENTS[getRandomNumber(0, COMMENTS.length-1)], //одно или два случайных предложения из списка
+    name: NAMES[getRandomNumber(0, NAMES.length-1)],
+  }
+});
+//Функция вывода основного объекта
+const getObjectCount = () =>
+  Array.from({
+    length: OBJECT_COUNT,
+  }, createRandomAnnouncement);
+getObjectCount();
 
