@@ -49,12 +49,10 @@ const NAMES = [
 const OBJECT_COUNT = 25;
 const MIN_LIKES = 15;
 const MAX_LIKES = 200;
-const MIN_ID = 1;
-const MAX_ID = 200;
 const MIN_AVATAR= 1;
 const MAX_AVATAR = 6;
 const MIN_OBJECT = 1;
-const MAX_OBJECT = 3;
+const MAX_OBJECT = 6;
 
 //Генерация числа из массива
 let RandomNumber;
@@ -74,7 +72,6 @@ const getRandomNumber = (min, max) => {
 };
 
 //Функции по созданию случайных чисел по заданным параметрам
-const getIdNumber = () => getRandomNumber(MIN_ID, MAX_ID);
 const getLikesNumber = () => getRandom(MIN_LIKES,MAX_LIKES);
 const getCommentsNumber = () => getRandomNumber(0, COMMENTS.length-1);
 const getNamesNumber = () => getRandomNumber(0, NAMES.length-1);
@@ -85,7 +82,7 @@ const getObjectsArray = () => {
   const ObjectsArray = [];
   for (let i = 1; i <= getObjectsNumber(); i++) {
     const CommentsObject = {
-      id: getIdNumber(),
+      id: i,
       avatar: `img/avatar-${getAvatarNumber()}.svg`,
       message: COMMENTS[getCommentsNumber()],
       name: NAMES[getNamesNumber()],
