@@ -57,20 +57,20 @@ const MIN_OBJECT = 1;
 const MAX_OBJECT = 3;
 
 //Генерация числа из массива
-let x;
+let RandomNumber;
 const getRandomNumber = (min, max) => {
   const arr = [];
   for (let i = min; i < max; i++) {
-    x = getRandom(min, max);
-    if (arr.includes(x) === true) {
+    RandomNumber = getRandom(min, max);
+    if (arr.includes(RandomNumber) === true) {
       i = i - 1;
     } else {
-      if (x > max === false) {
-        arr.push(x);
+      if (RandomNumber > max === false) {
+        arr.push(RandomNumber);
       }
     }
   }
-  return x;
+  return RandomNumber;
 };
 
 //Функции по созданию случайных чисел по заданным параметрам
@@ -84,13 +84,13 @@ const getObjectsNumber = () => getRandomNumber(MIN_OBJECT, MAX_OBJECT);
 const getObjectsArray = () => {
   const ObjectsArray = [];
   for (let i = 1; i <= getObjectsNumber(); i++) {
-    const COMMENTS_OBJECT = {
+    const CommentsObject = {
       id: getIdNumber(),
       avatar: `img/avatar-${getAvatarNumber()}.svg`,
       message: COMMENTS[getCommentsNumber()],
       name: NAMES[getNamesNumber()],
     };
-    ObjectsArray.push(COMMENTS_OBJECT);
+    ObjectsArray.push(CommentsObject);
   }
   return ObjectsArray;
 };
