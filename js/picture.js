@@ -1,4 +1,4 @@
-import {createRandomDescription} from './picture.js';
+import {createRandomDescription} from './data.js';
 
 // Находим фрагмент шаблона фотографии
 const templateFragment = document.querySelector('#picture')
@@ -19,3 +19,5 @@ const getPhotoObject = () => {
   return photo;
 };
 getPhotoObject();
+
+export {getPhotoObject};
