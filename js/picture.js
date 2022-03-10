@@ -5,6 +5,7 @@ const templateFragment = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
+//Функция по загрузке данных в клон шаблона #picture
 const getPhotoObject = () => {
   const photo = templateFragment.cloneNode(true);
   const photoSrc = photo.querySelector('picture-img');
