@@ -7,6 +7,7 @@ const templateFragment = document.querySelector('#picture')
   .querySelector('.picture');
 
 const getObjectOutput = createRandomDescription();
+
 //Вставим данные в шаблон
 getObjectOutput.forEach((elem) => {
   const photoElement = templateFragment.cloneNode(true);
@@ -17,6 +18,7 @@ getObjectOutput.forEach((elem) => {
 
 //Cоздаем фрагмент документа
 const photoListFragment = document.createDocumentFragment();
+
 //Возвращение шаблону ланных
 getObjectOutput.forEach(({url, likes, comments}) => {
   const photoElement = templateFragment.cloneNode(true); //Cклонируем шаблон изображения случайного пользователя
