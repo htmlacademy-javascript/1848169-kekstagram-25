@@ -72,4 +72,3 @@ const getObjectOutput = () =>
   }, createRandomDescription);
 
 export {getObjectOutput};
-export {createRandomDescription};
