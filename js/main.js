@@ -1,4 +1,4 @@
 import {getObjectOutput} from './data.js';
-import {getPhotoObject} from './picture.js';
+import './picture.js';
+
 getObjectOutput();
-getPhotoObject();
