@@ -1,29 +1,25 @@
-import {createRandomDescription} from './data.js';
-
 // Находим фрагмент шаблона фотографии
-
 const templateFragment = document.querySelector('#picture')
   .content
   .querySelector('.picture');
+//Создаем фрагмент
+const fragment = document.createDocumentFragment();
+const photosBlock = document.querySelector('.pictures');
 
-const getObjectOutput = createRandomDescription();
-
-//Вставим данные в шаблон
-getObjectOutput.forEach((elem) => {
-  const photoElement = templateFragment.cloneNode(true);
-  photoElement.querySelector('picture-img').src = elem.url;
-  photoElement.querySelector('picture__likes').textContent = elem.likes;
-  photoElement.querySelector('picture__comments').textContent = elem.comments.length;
-});
-
-//Cоздаем фрагмент документа
-const photoListFragment = document.createDocumentFragment();
-
-//Возвращение шаблону ланных
-getObjectOutput.forEach(({url, likes, comments}) => {
-  const photoElement = templateFragment.cloneNode(true); //Cклонируем шаблон изображения случайного пользователя
-  photoElement.querySelector('picture-img').src = url;
-  photoElement.querySelector('picture__likes').textContent = likes;
-  photoElement.querySelector('picture__comments').textContent = comments.length;
-  return photoListFragment;
-});
+// Заполнение шаблона документа
+const getPhotosParametres = (photoObject) => {
+  const photoItem = templateFragment.cloneNode(true);
+  photoItem.querySelector('picture-img').src = photoObject.url;
+  photoItem.querySelector('picture__likes').textContent = photoObject.likes;
+  photoItem.querySelector('picture__comments').textContent = photoObject.comments.length;
+  return photoItem;
+};
+//Создание заполненного шаблона в фрагмент документа
+const createPhotosFragment = (photos) => {
+  for (let i = 0; i < photos.length; i++) {
+    const photoElement = getPhotosParametres(photos[i]);
+    fragment.appendChild(photoElement);
+  }
+  photosBlock.appendChild(fragment);
+};
+export {createPhotosFragment};
