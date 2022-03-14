@@ -1,3 +1,4 @@
+const ESC = 'Escape';
 //Функция, возвращающая случайное целое число из переданного диапазона включительно
 const getRandom = (min, max) => {
   min = Math.ceil(min);
@@ -33,6 +34,13 @@ const getRandomNumber = (min, max) => {
     }
   }
   return RandomNumber;
+};
+
+// Функция закрытия окна по Escape
+const isEscapeEvent = (evt, action) => {
+  if (evt.key === ESC) {
+    action();
+  }
 };
 
 export {getRandom};
