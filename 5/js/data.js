@@ -67,9 +67,6 @@ const createRandomDescription = (_elem, id) => ({
 
 //Функция cоздания и вывода массива
 const getObjectOutput = () =>
-  Array.from({
-    length: OBJECT_COUNT,
-  }, createRandomDescription);
+  Array.from({length: OBJECT_COUNT,}, createRandomDescription);
 
 export {getObjectOutput};
-export {createRandomDescription};
