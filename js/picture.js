@@ -1,4 +1,3 @@
-const COUNT_PHOTOS = 10;
 // Находим фрагмент шаблона фотографии
 const templateFragment = document.querySelector('#picture')
   .content
@@ -25,14 +24,4 @@ const createPhotosFragment = (photos) => {
   photosBlock.appendChild(fragment);
 };
 
-//Функция cоздания массива фотографий
-
-const getArrayPhoto = () => {
-  Array.from({length:  COUNT_PHOTOS,
-  }, getPhotoItem);
-  createPhotosFragment(getArrayPhoto);
-  return getArrayPhoto;
-};
-
 export {createPhotosFragment};
-export {getArrayPhoto};
