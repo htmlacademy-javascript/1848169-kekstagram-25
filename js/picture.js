@@ -25,4 +25,3 @@ const createPhotosFragment = (photos) => {
 };
 
 export {createPhotosFragment};
-export {getPhotoItem};
