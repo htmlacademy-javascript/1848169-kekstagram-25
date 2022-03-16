@@ -15,7 +15,7 @@ const getPhotoItem = (photoObject) => {
   return photoItem;
 };
 
-//Создание заполненного шаблона в фрагмент документа
+//Создание вставки шаблона в фрагмент документа
 const createPhotosFragment = (photos) => {
   for (let i = 0; i < photos.length; i++) {
     const photoElement = getPhotoItem(photos[i]);
@@ -25,3 +25,4 @@ const createPhotosFragment = (photos) => {
 };
 
 export {createPhotosFragment};
+export {getPhotoItem};
