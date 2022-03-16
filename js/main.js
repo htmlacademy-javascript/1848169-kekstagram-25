@@ -1,5 +1,6 @@
 import {getObjectOutput} from './data.js';
-import {getArrayPhoto} from './picture.js';
+import {createPhotosFragment} from './picture.js';
 
-getObjectOutput();
-getArrayPhoto();
+const photosData = getObjectOutput();
+createPhotosFragment(photosData);
+
