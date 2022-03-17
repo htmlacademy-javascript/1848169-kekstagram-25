@@ -10,6 +10,7 @@ const commentsLoader = document.querySelector('.comments-loader');
 const bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
 const ESC = 'Escape';
 
+
 // Отрисовка одного комментария
 const bigPictureComment = (comment) => {
   const commentItem = commentElement.cloneNode(true);

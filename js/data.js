@@ -54,6 +54,7 @@ const getObjectsArray = () => {
   return ObjectsArray;
 };
 
+
 //Функция формирования объекта описания фото и комментария из массива
 const createRandomDescription = (_elem, id) => ({
   author: {
