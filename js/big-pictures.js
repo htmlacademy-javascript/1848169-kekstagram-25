@@ -51,6 +51,7 @@
 //   }
 // };
 
+
 // // Функция закрытия окна полноразмерного изображения по Escape
 // const onEscPress = (evt) => {
 //   getEscapeEvent(evt, closeBigPicture);
