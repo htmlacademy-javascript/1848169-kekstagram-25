@@ -54,7 +54,6 @@ const getObjectsArray = () => {
   return ObjectsArray;
 };
 
-
 //Функция формирования объекта описания фото и комментария из массива
 const createRandomDescription = (_elem, id) => ({
   id: (++id), //идентификатор описания. Это число от 1 до 25. Идентификаторы не должны повторяться.
