@@ -1,5 +1,5 @@
 //Описание переменных
-const fragmentDocument = document.createDocumentFragment();
+// const fragmentDocument = document.createDocumentFragment();
 const bigPicture =  document.querySelector('.big-pictures');
 const bigPictureImg = document.querySelector('.big-picture__img');
 const socialCommentCount = document.querySelector('.social__comment-count');
@@ -9,7 +9,6 @@ const commentElement = commentsList.querySelector('.social__comment');
 const commentsLoader = document.querySelector('.comments-loader');
 const bigPictureClose = bigPicture.querySelector('.big-picture__cancel');
 const ESC = 'Escape';
-
 
 // Отрисовка одного комментария
 const bigPictureComment = (comment) => {
@@ -61,3 +60,4 @@ const onEscPress = (evt) => {
 const onEscCloseClick = () => {
   closeBigPicture();
 };
+
