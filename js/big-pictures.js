@@ -1,5 +1,5 @@
 //Описание переменных
-const bigPicture =  document.querySelector('.big-pictures');
+const bigPicture =  document.querySelector('.big-picture');
 const bigPictureImg = document.querySelector('.big-picture__img');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const body = document.querySelector('body');
@@ -45,7 +45,6 @@ const closeBigPicture = () => {
 // Функция закрытия окна полноразмерного изображения по Escape
 function onEscPress (evt) {
   getEscapeEvent(evt, closeBigPicture);
-  return onEscPress;
 }
 
 //Обработчик закрытия окна кликом по иконке закрытия
