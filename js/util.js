@@ -35,7 +35,4 @@ const getRandomNumber = (min, max) => {
   return RandomNumber;
 };
 
-
-export {getRandom};
-export {getRandomNumber};
-export {getLength};
+export {getRandom, getRandomNumber, getLength};

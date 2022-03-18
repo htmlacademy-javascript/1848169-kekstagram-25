@@ -21,15 +21,15 @@ bigPictureComment();
 
 //Создание полноразмерного изображения
 const createBigPhotos = (bigPhoto) => {
-  bigPicture.classList.remove('.hidden');
+  bigPicture.classList.remove('hidden');
   bigPictureImg.src = bigPhoto.url;
   bigPicture.querySelector('.likes-count').textContent = bigPhoto.likes;
   bigPicture.querySelector('.comments-count').textContent = bigPhoto.comments.length;
   bigPicture.querySelector('.social__caption').textContent = bigPhoto.description;
   document.addEventListener('keydown', onEscPress);
-  body.classList.add('.modal-open');
-  socialCommentCount.classList.add('.hidden');
-  commentsLoader.classList.add('.hidden');
+  body.classList.add('modal-open');
+  socialCommentCount.classList.add('hidden');
+  commentsLoader.classList.add('hidden');
   return bigPicture;
 };
 createBigPhotos();
@@ -37,7 +37,7 @@ createBigPhotos();
 // Закрытие окна полноразмерного изображения
 const closeBigPicture = () => {
   bigPicture.classList.add('.hidden');
-  body.classList.remove('.modal-open');
+  body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscPress);
   bigPictureClose.removeEventListener('click', onEscCloseClick);
 };
