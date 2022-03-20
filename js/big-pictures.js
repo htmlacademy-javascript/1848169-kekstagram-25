@@ -2,7 +2,6 @@ import {getEscapeEvent} from './util.js';
 
 //Описание переменных
 const bigPicture =  document.querySelector('.big-picture');
-// const pictureImg = document.querySelectorAll('.picture__img');
 const bigPictureImg = document.querySelector('.big-picture__img');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const body = document.querySelector('body');
@@ -23,13 +22,14 @@ const getBigPictureComment = (comment) => {
 //Создание фрагмента комментария
 const createCommentsFragment = (commentsArray) => {
   const fragment = document.createDocumentFragment();
-  for (let i = 0; i < commentsArray.length; i++) {
-    const commentElementArray = getBigPictureComment(commentsArray[i]);
-    fragment.appendChild(commentElementArray);
-  }
+  commentsArray.forEach((comment) => {
+    const newComment = getBigPictureComment(comment);
+    fragment.appendChild(newComment);
+  });
   commentsList.appendChild(fragment);
 };
 createCommentsFragment();
+
 
 //Создание полноразмерного изображения
 const showBigPhoto = (bigPhoto) => {
@@ -37,26 +37,13 @@ const showBigPhoto = (bigPhoto) => {
   bigPicture.querySelector('.likes-count').textContent = bigPhoto.likes;
   bigPicture.querySelector('.comments-count').textContent = bigPhoto.comments.length;
   bigPicture.querySelector('.social__caption').textContent = bigPhoto.description;
-  document.addEventListener('keydown', onBigPictureEscPress);
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   socialCommentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
+  document.addEventListener('keydown', onBigPictureEscPress);
   bigPictureClose.addEventListener('click', onBigPictureCloseClick);
 };
-//Обработчик клика по фотографии
-// const onBigPictureOpenClick = (thumbnail, photo) => {
-//   thumbnail.addEventListener('click', () => {
-//     bigPictureImg.querySelector('img').src = photo;
-//   });
-//   document.addEventListener('keydown', onBigPictureEscPress);
-//   bigPictureClose.addEventListener('click', onBigPictureCloseClick);
-// };
-// for (let i = 0; i < pictureImg.length; i++) {
-
-//   onBigPictureOpenClick(pictureImg[i], photos[i]);
-// }
-// onBigPictureOpenClick();
 
 //Вывод полноразмерного изображения
 const showBigPictureObject = (pictureObject) => {

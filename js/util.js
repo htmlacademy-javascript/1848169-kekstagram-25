@@ -36,9 +36,10 @@ const getRandomNumber = (min, max) => {
 };
 
 // Функция закрытия окна по Escape
-function getEscapeEvent (evt, action) {
-  if (evt.key === ESC) {
+const getEscapeEvent = (evt, action) => {
+  if (evt.key === 'Escape') {
     action();
   }
-}
+};
+
 export {getRandom, getRandomNumber, getLength, getEscapeEvent};
