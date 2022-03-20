@@ -24,4 +24,4 @@ const createPhotosFragment = (photos) => {
   photosBlock.appendChild(fragment);
 };
 
-export {createPhotosFragment};
+export {createPhotosFragment, getPhotoItem};
