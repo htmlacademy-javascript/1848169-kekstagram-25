@@ -1,7 +1,8 @@
 import {getEscapeEvent} from './util.js';
+
 //Описание переменных
 const bigPicture =  document.querySelector('.big-picture');
-const pictureImg = document.querySelectorAll('.picture__img');
+// const pictureImg = document.querySelectorAll('.picture__img');
 const bigPictureImg = document.querySelector('.big-picture__img');
 const socialCommentCount = document.querySelector('.social__comment-count');
 const body = document.querySelector('body');
@@ -41,20 +42,21 @@ const showBigPhoto = (bigPhoto) => {
   body.classList.add('modal-open');
   socialCommentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
-};
-//Обработчик клика по фотографии
-const onBigPictureOpenClick = (thumbnail, photo) => {
-  thumbnail.addEventListener('click', () => {
-    bigPictureImg.querySelector('img').src = photo;
-  });
-  document.addEventListener('keydown', onBigPictureEscPress);
   bigPictureClose.addEventListener('click', onBigPictureCloseClick);
 };
-for (let i = 0; i < pictureImg.length; i++) {
+//Обработчик клика по фотографии
+// const onBigPictureOpenClick = (thumbnail, photo) => {
+//   thumbnail.addEventListener('click', () => {
+//     bigPictureImg.querySelector('img').src = photo;
+//   });
+//   document.addEventListener('keydown', onBigPictureEscPress);
+//   bigPictureClose.addEventListener('click', onBigPictureCloseClick);
+// };
+// for (let i = 0; i < pictureImg.length; i++) {
 
-  onBigPictureOpenClick(pictureImg[i], photos[i]);
-}
-onBigPictureOpenClick();
+//   onBigPictureOpenClick(pictureImg[i], photos[i]);
+// }
+// onBigPictureOpenClick();
 
 //Вывод полноразмерного изображения
 const showBigPictureObject = (pictureObject) => {
