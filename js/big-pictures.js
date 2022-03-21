@@ -1,5 +1,5 @@
 import {getEscapeEvent} from './util.js';
-
+import {getObjectsArray} from './data.js';
 //Описание переменных
 const bigPicture =  document.querySelector('.big-picture');
 const bigPictureImg = document.querySelector('.big-picture__img');
@@ -28,8 +28,7 @@ const createCommentsFragment = (commentsArray) => {
   });
   commentsList.appendChild(fragment);
 };
-createCommentsFragment();
-
+createCommentsFragment(getObjectsArray());
 
 //Создание полноразмерного изображения
 const showBigPhoto = (bigPhoto) => {
