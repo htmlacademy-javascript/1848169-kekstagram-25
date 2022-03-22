@@ -3,3 +3,5 @@ import {createPhotosFragment} from './picture.js';
 
 const photosData = getObjectOutput();
 createPhotosFragment(photosData);
+
+
