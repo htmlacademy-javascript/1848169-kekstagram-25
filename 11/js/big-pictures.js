@@ -1,5 +1,5 @@
 import {getEscapeEvent} from './util.js';
-import {getObjectsArray} from './data.js';
+
 //Описание переменных
 const bigPicture =  document.querySelector('.big-picture');
 const bigPictureImg = document.querySelector('.big-picture__img');
@@ -28,7 +28,7 @@ const createCommentsFragment = (commentsArray) => {
   });
   commentsList.appendChild(fragment);
 };
-createCommentsFragment(getObjectsArray());
+
 
 //Создание полноразмерного изображения
 const showBigPhoto = (bigPhoto) => {
@@ -37,6 +37,7 @@ const showBigPhoto = (bigPhoto) => {
   bigPicture.querySelector('.comments-count').textContent = bigPhoto.comments.length;
   bigPicture.querySelector('.social__caption').textContent = bigPhoto.description;
   bigPicture.classList.remove('hidden');
+  createCommentsFragment(bigPhoto.comments);
   body.classList.add('modal-open');
   socialCommentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
