@@ -32,13 +32,14 @@ const createCommentsFragment = (commentsArray) => {
 
 //Создание полноразмерного изображения
 const showBigPhoto = (bigPhoto) => {
+  body.classList.add('modal-open');
+  commentsList.innerHTML = '';
   bigPictureImg.querySelector('img').src = bigPhoto.url;
   bigPicture.querySelector('.likes-count').textContent = bigPhoto.likes;
   bigPicture.querySelector('.comments-count').textContent = bigPhoto.comments.length;
   bigPicture.querySelector('.social__caption').textContent = bigPhoto.description;
   bigPicture.classList.remove('hidden');
   createCommentsFragment(bigPhoto.comments);
-  body.classList.add('modal-open');
   socialCommentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
   document.addEventListener('keydown', onBigPictureEscPress);
@@ -68,4 +69,4 @@ function onBigPictureCloseClick () {
   closeBigPicture();
 }
 
-export {showBigPhoto, showBigPictureObject};
+export {showBigPictureObject};
