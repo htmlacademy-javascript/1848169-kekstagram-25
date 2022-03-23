@@ -42,4 +42,8 @@ const getEscapeEvent = (evt, action) => {
   }
 };
 
+window.util = {
+  getEscapeEvent: getEscapeEvent,
+};
+
 export {getRandom, getRandomNumber, getLength, getEscapeEvent};
