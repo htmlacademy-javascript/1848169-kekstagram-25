@@ -1,99 +1,111 @@
-//Описание необходимых переменных
-const textHashtags = document.querySelector('.text__hashtags');
-const textDescription = document.querySelector('.text__description');
-const BAG_SYMBOL = /^#?[а-яёа-z\d]+$/;
-const MAX_LENGTH_HASHTAG = 20;
-const MAX_NUMBER_HASHTAG = 5;
+// Поиск классов для ввода текста и комментариев
+const inputHashtags = document.querySelector('.text__hashtags');
+const commentTextarea = document.querySelector('.text__description');
 
-//Создаем массив объектов проверочных выражений для хэштегов
-const hashtagCheck = [
-  {
-    check: (string) => {
-      return !string.startsWith('#');
-    },
-    message: 'Хэш-тег должен начинаться с символа # (решетка)'
-  },
-  {
-    check: (string) => {
-      return !BAG_SYMBOL.test(string);
-    },
-    message: 'Хэш-тег должен состоять только из букв и цифр'
-  },
-  {
-    check: (string) => {
-      return string.length > MAX_LENGTH_HASHTAG;
-    },
-    message: 'Хэш тег не может содержать более' + MAX_LENGTH_HASHTAG + 'символов'
-  },
-  {
-    check: (string) => {
-      return string.length === 1;
-    },
-    message: 'Хэш тег не может содержать только один символ'
-  },
-];
+//Параметры комментариев
+const commentsFeatures = {
+  MAX_LENGTH: 140
+};
 
-//Создание массива хэштегов для проверки повторяющихся хэштегов и количества хэштегов
-const hashtagCheckArray = [
-{
-  check: (array) => {
-    const dublicatesObject = {};
-    const dublicateResult = false;
-    for (const i = 0; i > array.length; i++) {
-      if(!(array[i] in dublicatesObject)) { //Если не из первоначального массива то результат истина
-        dublicatesObject[array[i]] = true;
-      } else {
-        dublicateResult = true;
-      }
+const hashtagsFeatures = {
+  MAX_NUMBER: 5,
+  MAX: 20,
+  REGULAR: /^#?а-яёа-zd]+$/
+};
+
+//Сообщания об ошибках
+const errorMessages = {
+  COMMENT_LONG: `Комментарий не может составлять больше ${commentsFeatures.MAX_LENGTH} символов`,
+  SPACE_HASHTAGS: 'Хэш-теги должны разделяться пробелами',
+  HASH_SYMBOL: 'Хэш-тег должен начинаться с символа # (решётка)',
+  TOO_SHORT: 'Хэш-тег не может состоять только из символа # (решётка)',
+  HASHTAGS_LONG: `Максимальная длина одно хэш-тега не должна превышать ${hashtagsFeatures.MAX} символов`,
+  UNIQUE: 'Хэш-тег не может быть использован дважды',
+  OVER_MAX: `Количество хэш-тегов не должно быть больше ${hashtagsFeatures.MAX_NUMBER}`,
+  BAG_SYMBOL_MESSAGE: 'Строка после решетки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и.т.п), символы пунктуации (тиреЮ запятая, и.т.п), эмодзи'
+};
+
+//Обработчик текста ввода комментария
+const onCommentTextareaInput = () => {
+  const text = commentTextarea.value;
+  if (!text.length) {
+    return;
+  }
+  if (text.length > commentsFeatures.MAX_LENGTH) {
+    commentTextarea.setCustomValidity(errorMessages.COMMENT_LONG);
+  }
+};
+// Выделение поля ввода
+const lightInput = (input) => {
+  input.style.border = '3px solid green';
+  input.style.boxShadow = 'none';
+};
+
+// Убираем подсветку инпута
+const resetlightInput = (input) => {
+  input.style.border = '';
+};
+
+//Проверка повторного использования хэштэга
+const isHashtagAgain = (item, index, items) => items.indexOf(item) === index;
+
+// Обработчик ввода хэштегов
+const onInputHashtags = () => {
+  resetlightInput(inputHashtags);
+  const hashtags = inputHashtags.value.trim().toLowerCase().split(' ');
+
+  if (!hashtags.length) {
+    return;
+  }
+
+  if (hashtags.length > hashtagsFeatures.MAX_NUMBER) {
+    lightInput(inputHashtags);
+    inputHashtags.setCustomValidity(errorMessages.OVER_MAX);
+    return;
+  }
+
+  if (!hashtags.every(isHashtagAgain)) {
+    lightInput(inputHashtags);
+    inputHashtags.setCustomValidity(errorMessages.UNIQUE);
+    return;
+  }
+
+  hashtags.forEach((hashtag) => {
+    if (hashtag.length > hashtagsFeatures.MAX) {
+      lightInput(inputHashtags);
+      inputHashtags.setCustomValidity(errorMessages.HASHTAGS_LONG);
+    } else if (/^#?а-яёа-zd]+$/.test(hashtag)) {
+      inputHashtags.setCustomValidity(errorMessages.BAG_SYMBOL_MESSAGE);
+    } else if (hashtag === '#') {
+      lightInput(inputHashtags);
+      inputHashtags.setCustomValidity(errorMessages.TOO_SHORT);
+    } else if (hashtag.charAt(0) !== '#') {
+      lightInput(inputHashtags);
+      inputHashtags.setCustomValidity(errorMessages.HASH_SYMBOL);
+    } else if (hashtag.includes('#', 1)) {
+      lightInput(inputHashtags);
+      inputHashtags.setCustomValidity(errorMessages.SPACE_DELIMITER);
+    } else {
+      resetlightInput(inputHashtags);
+      inputHashtags.setCustomValidity('');
     }
-    return dublicateResult;
-  },
-    message: 'Один и тот же хэштэг не может быть использован дважды'
-  },
-  {
-    check: (array) => {
-      return array.length > MAX_NUMBER_HASHTAG;
-  },
-    message: 'Нельзя указывать более' +  MAX_NUMBER_HASHTAG + 'хэштегов'
-  },
-];
-
-const getFixText = () => {
-  const hashtagWords = textHashtags.value.toLowerCase();
-  const hashtagText = hashtagWords.trim().split('');
-
-  const newHashtagCheckArray = hashtagCheckArray.filter((rule) => {
-    return rule.check(hashtagText); //Возвращает массив с пробелами
   });
-
-//Проверка массива условию в заданной функции
-  const newTagRules = hashtagCheck.filter((rule) => {
-    return hashtagText.some((tag) => {
-      return rule.check(tag);
-    });
-  });
-  return newHashtagCheckArray.concat(newTagRules).map((rule) => {
-    return rule.message;
-  })
-  .join('');
 };
 
-//Проверка вводимого значения
-const checkTextHashtags = () => {
-  const errors = getFixText();
-  if (errors) {
-    textHashtags.setCustomValidity(errors); //Проверка на валидность
-    textHashtags.style.border = '3px solid red';
-  }
-  else {
-    textHashtags.setCustomValidity('');
-    textHashtags.style.border = '';
-  }
+// Подключаем обработчик события на форму
+const activateForm = () => {
+  inputHashtags.addEventListener('input', onInputHashtags);
+  commentTextarea.addEventListener('input', onCommentTextareaInput);
 };
-textHashtags.addEventListener('input', checkTextHashtags);
 
-//Выносим в глобальную область видимости
+// Отключаем обработчик события с формы
+const disableForm = () => {
+  inputHashtags.removeEventListener('input', onInputHashtags);
+  commentTextarea.removeEventListener('input', onCommentTextareaInput);
+};
+
+// Передаём функции в глобальную область видимости
 window.validation = {
-  textHashtags: textHashtags,
-  textDescription: textDescription
+  activateForm: activateForm,
+  disableForm: disableForm
 };
