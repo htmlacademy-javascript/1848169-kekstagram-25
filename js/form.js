@@ -10,7 +10,8 @@ const body = window.bigPicture.body;
 const openImageEditOverlay = () => {
   editImageOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  editImageCloseButton.addEventListener('click', editImageOverlayClose);
+  document.addEventListener('keydown', onImageOverlayEscPress);
+  editImageCloseButton.addEventListener('click', onImageOverlayClose);
 };
 
 //Обработчик открытия окна редактирования
@@ -21,20 +22,20 @@ uploadFileInput.addEventListener('change', onUploadChange);
 
 
 //Функция закрытия окна редактора
-function editImageOverlayClose () {
+const editImageOverlayClose = () => {
   editImageOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   uploadForm.reset();
-  editImageCloseButton.removeEventListener('click', onEditImageOverlayClose);
-  document.removeEventListener('keydown', onEditImageOverlayEscPress);
-}
+  document.removeEventListener('keydown', onImageOverlayEscPress);
+  editImageCloseButton.removeEventListener('click', onImageOverlayClose);
+};
 
 //Обработчик закрытия окна редактирования
-function onEditImageOverlayClose () {
+function onImageOverlayClose () {
   editImageOverlayClose();
 }
 
 //Функция закрытия окна редактора по ESC
-function onEditImageOverlayEscPress (evt) {
+function onImageOverlayEscPress (evt) {
   getEscapeEvent(evt, editImageOverlayClose);
 }
