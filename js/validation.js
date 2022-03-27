@@ -1,9 +1,10 @@
 import {getLength} from './util.js';
 
 // Поиск классов для ввода текста и комментариев
-const inputHashtags = document.querySelector('.text__hashtags');
-const commentTextarea = document.querySelector('.text__description');
 const uploadForm = document.querySelector('.img-upload__form');
+const inputHashtags = uploadForm.querySelector('.text__hashtags');
+const commentTextarea = uploadForm.querySelector('.text__description');
+
 
 //Параметры комментариев
 const commentsFeatures = {
@@ -76,6 +77,11 @@ pristine.addValidator(inputHashtags, getHashtagSpace, errorMessages.SPACE_HASHTA
 
 //Обработчик проверки при отправке сообщения
 inputHashtags.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  pristine.validate();
+});
+
+commentTextarea.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristine.validate();
 });
