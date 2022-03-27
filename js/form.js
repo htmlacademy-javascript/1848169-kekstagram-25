@@ -1,15 +1,18 @@
+import {getEscapeEvent} from './util.js';
+
 //Описание переменных
+const body = document.querySelector('body');
 const uploadFileInput = document.querySelector('#upload-file');
 const uploadForm = document.querySelector('.img-upload__form');
 const editImageOverlay = document.querySelector('.img-upload__overlay');
-const editImageCloseButton = editImageOverlay.querySelector('#upload__cancel');
-const getEscapeEvent = window.util.getEscapeEvent;
-const body = window.bigPicture.body;
+const editImageCloseButton = editImageOverlay.querySelector('img-upload__cancel');
+const inputHashtags = document.querySelector('.text__hashtags');
+const commentTextarea = document.querySelector('.text__description');
 
 //Функция открытия окна редактирования
 const openImageEditOverlay = () => {
-  editImageOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
+  editImageOverlay.classList.remove('hidden');
   document.addEventListener('keydown', onImageOverlayEscPress);
   editImageCloseButton.addEventListener('click', onImageOverlayClose);
 };
@@ -37,5 +40,8 @@ function onImageOverlayClose () {
 
 //Функция закрытия окна редактора по ESC
 function onImageOverlayEscPress (evt) {
-  getEscapeEvent(evt, editImageOverlayClose);
+  const active = document.activeElement;
+  if (inputHashtags !== active && commentTextarea !== active) {
+    getEscapeEvent(evt, editImageOverlayClose);
+  }
 }

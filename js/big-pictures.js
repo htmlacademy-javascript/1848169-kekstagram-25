@@ -69,8 +69,4 @@ function onBigPictureCloseClick () {
   closeBigPicture();
 }
 
-window.bigPicture = {
-  body: body
-};
-
 export {showBigPictureObject};
