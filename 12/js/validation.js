@@ -1,6 +1,10 @@
+import {getLength} from './util.js';
+
 // Поиск классов для ввода текста и комментариев
-const inputHashtags = document.querySelector('.text__hashtags');
-const commentTextarea = document.querySelector('.text__description');
+const uploadForm = document.querySelector('.img-upload__form');
+const inputHashtags = uploadForm.querySelector('.text__hashtags');
+const commentTextarea = uploadForm.querySelector('.text__description');
+
 
 //Параметры комментариев
 const commentsFeatures = {
@@ -25,69 +29,59 @@ const errorMessages = {
   BAG_SYMBOL_MESSAGE: 'Строка после решетки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и.т.п), символы пунктуации (тиреЮ запятая, и.т.п), эмодзи'
 };
 
-//Обработчик текста ввода комментария
-const onCommentTextareaInput = () => {
-  const text = commentTextarea.value;
-  if (!text.length) {
-    return;
-  }
-  if (text.length > commentsFeatures.MAX_LENGTH) {
-    commentTextarea.setCustomValidity(errorMessages.COMMENT_LONG);
-  }
-};
+const pristine = new Pristine(uploadForm, {
+  classTextarea: 'commentTextarea',
+  classHashtags: 'inputHashtags'
+});
+
+//Обработчик проверки длины строки ввода комментария
+const getCommentTextareaInput = (value) => (
+  getLength(value, commentsFeatures.MAX_LENGTH)
+);
+pristine.addValidator(commentTextarea, getCommentTextareaInput, errorMessages.COMMENT_LONG);
+
+const hashtags = inputHashtags.value.trim().toLowerCase().split(' ');
+
+//Обработчик проверки длины строки ввода хештега
+const getHashtagInput = (value) => (
+  getLength(value, hashtagsFeatures.MAX)
+);
+pristine.addValidator(inputHashtags, getHashtagInput, errorMessages.HASHTAGS_LONG);
 
 //Проверка повторного использования хэштэга
-const isHashtagAgain = (item, index, items) => items.indexOf(item) === index;
-
-// Обработчик ввода хэштегов
-const onInputHashtags = () => {
-  const hashtags = inputHashtags.value.trim().toLowerCase().split(' ');
-
-  if (!hashtags.length) {
-    return;
-  }
-
-  if (hashtags.length > hashtagsFeatures.MAX_NUMBER) {
-    inputHashtags.setCustomValidity(errorMessages.OVER_MAX);
-    return;
-  }
-
-  if (!hashtags.every(isHashtagAgain)) {
-    inputHashtags.setCustomValidity(errorMessages.UNIQUE);
-    return;
-  }
-
-  hashtags.forEach((hashtag) => {
-    if (hashtag.length > hashtagsFeatures.MAX) {
-      inputHashtags.setCustomValidity(errorMessages.HASHTAGS_LONG);
-    } else if (/^#?а-яёа-zd]+$/.test(hashtag)) {
-      inputHashtags.setCustomValidity(errorMessages.BAG_SYMBOL_MESSAGE);
-    } else if (hashtag === '#') {
-      inputHashtags.setCustomValidity(errorMessages.TOO_SHORT);
-    } else if (hashtag.charAt(0) !== '#') {
-      inputHashtags.setCustomValidity(errorMessages.HASH_SYMBOL);
-    } else if (hashtag.includes('#', 1)) {
-      inputHashtags.setCustomValidity(errorMessages.SPACE_DELIMITER);
-    } else {
-      inputHashtags.setCustomValidity('');
-    }
-  });
+const getHashtagCopy = (item, index, items) => {
+  const hashtagResult = items.indexOf(item) === index;
+  return (!hashtags.every(hashtagResult));
 };
+pristine.addValidator(inputHashtags, getHashtagCopy, errorMessages.UNIQUE);
 
-// Подключаем обработчик события на форму
-const activateForm = () => {
-  inputHashtags.addEventListener('input', onInputHashtags);
-  commentTextarea.addEventListener('input', onCommentTextareaInput);
-};
+//Проверка количества введенных хештегов
+const getHashtagNumber = () => hashtags.length > hashtagsFeatures.MAX_NUMBER;
+pristine.addValidator(inputHashtags, getHashtagNumber, errorMessages.OVER_MAX);
 
-// Отключаем обработчик события с формы
-const disableForm = () => {
-  inputHashtags.removeEventListener('input', onInputHashtags);
-  commentTextarea.removeEventListener('input', onCommentTextareaInput);
-};
+//Проверка ввода недопустимых регулярных символов
+const getHashtagRegular = () => (hashtagsFeatures.REGULAR.test(hashtags));
+pristine.addValidator(inputHashtags, getHashtagRegular, errorMessages.BAG_SYMBOL_MESSAGE);
 
-// Передаём функции в глобальную область видимости
-window.validation = {
-  activateForm: activateForm,
-  disableForm: disableForm
-};
+//Проверка на наличие ввода только символа #
+const getHashtagSymbol = () => (hashtags === '#');
+pristine.addValidator(inputHashtags, getHashtagSymbol, errorMessages.TOO_SHORT);
+
+//Проверка на наличие ввода первого символа #
+const getHashtagSymbolOnly = () => (hashtags.charAt(0) !== '#');
+pristine.addValidator(inputHashtags, getHashtagSymbolOnly, errorMessages.HASH_SYMBOL);
+
+//Проверка пробелов между хэштегами
+const getHashtagSpace = () => (hashtags.split('#').length - 1 > 1);
+pristine.addValidator(inputHashtags, getHashtagSpace, errorMessages.SPACE_HASHTAGS);
+
+//Обработчик проверки при отправке сообщения
+inputHashtags.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  pristine.validate();
+});
+
+commentTextarea.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  pristine.validate();
+});
