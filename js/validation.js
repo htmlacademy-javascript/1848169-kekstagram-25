@@ -4,6 +4,7 @@ import {getLength} from './util.js';
 const uploadForm = document.querySelector('.img-upload__form');
 const inputHashtags = uploadForm.querySelector('.text__hashtags');
 const commentTextarea = uploadForm.querySelector('.text__description');
+const SPACE_HASHTAG_SEPARATOR = ' ';
 
 //Параметры комментариев
 const commentsFeatures = {
@@ -13,7 +14,8 @@ const commentsFeatures = {
 const hashtagsFeatures = {
   MAX_NUMBER: 5,
   MAX: 20,
-  REGULAR: /^#[A-Za-za-Яа-яЁё0-9]{1,19}$/
+  REGULAR: /^#[A-Za-za-Яа-яЁё 0-9]{1,19}$/,
+  IS_HASH_SYMBOL: /[^#]/,
 };
 
 //Сообщания об ошибках
@@ -33,11 +35,18 @@ const pristine = new Pristine(uploadForm, {
   errorClass: 'img-upload__text--invalid',
   succesClass: 'img-upload__text--valid',
   errorTextParent: 'img-upload__text',
-  errorTextTag: 'span',
+  errorTextTag: 'div',
   errorTextClass: 'text'
 });
 
-const hashtags = inputHashtags.value.trim().toLowerCase().split(' '); //удаляем пробелы, преобразуем в строчные буквы,
+//удаляем пробелы, преобразуем в строчные буквы,
+uploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  pristine.validate();
+});
+
+//Функция деления строки хэштегов по указаннаму элементу separator
+const stringToArray = (string, separator) => string.split(separator);
 
 // Обработчик проверки длины строки ввода комментария
 const getCommentTextareaInput = (value) => (
@@ -45,53 +54,61 @@ const getCommentTextareaInput = (value) => (
 );
 pristine.addValidator(commentTextarea, getCommentTextareaInput, errorMessages.COMMENT_LONG);
 
-// Обработчик проверки длины строки ввода хештега_работает
-const getHashtagInput = (value) => (
-  getLength(value, hashtagsFeatures.MAX)
-);
-pristine.addValidator(inputHashtags, getHashtagInput, errorMessages.HASHTAGS_LONG);
+// Обработчик проверки длины строки ввода хештега (не более 20 символов)
+const getCommentTextareaHashtag = (value) => getLength(value, hashtagsFeatures.MAX);
+pristine.addValidator(inputHashtags, getCommentTextareaHashtag, errorMessages.HASHTAGS_LONG);
 
-//Проверка на наличие ввода первого символа #_работает
-const getHashtagSymbolOnly = (value) => (value.startsWith('#'));
-pristine.addValidator(inputHashtags, getHashtagSymbolOnly, errorMessages.HASH_SYMBOL);
-
-//Проверка на наличие ввода только символа #_работает
-const getHashtagSymbol = (value) => (value === '#');
-pristine.addValidator(inputHashtags, getHashtagSymbol, errorMessages.TOO_SHORT);
-
-
-// Проверка повторного использования хэштэга_не работает
-// const getHashtagCopy = (item, index, items) => {
-//   const hashtagResult = items.indexOf('item') === index;
-//   return (!item.every(hashtagResult));
-// };
-const getHashtagCopy = () => {
-  const arrClone = hashtags.slice(0);
-  let duplicateExists = false;
-  for (let i = 0; i < hashtags.length; i++) {
-    if (!(hashtags[i] in arrClone)) {
-      arrClone[hashtags[i]] = true;
-    } else {
-      duplicateExists = true;
-    }
-    return duplicateExists;
+//Проверка на наличие первого символа #
+pristine.addValidator(inputHashtags, (value) => {
+  if (value.startsWith('#')) {
+    return true;
   }
-};
-pristine.addValidator(inputHashtags, getHashtagCopy, errorMessages.UNIQUE);
+  return false;
+}, errorMessages.HASH_SYMBOL);
 
-//Проверка количества введенных хештегов_не работает
-const getHashtagNumber = (value) => (value.length > hashtagsFeatures.MAX_NUMBER);
-pristine.addValidator(inputHashtags, getHashtagNumber, errorMessages.OVER_MAX);
+//Проверка на наличие ввода только символа #
+pristine.addValidator(inputHashtags, (value) => {
+  if (value.match(hashtagsFeatures.IS_HASH_SYMBOL)) {
+    return true;
+  }
+  return false;
+}, errorMessages.TOO_SHORT);
 
-//Проверка ввода недопустимых регулярных символов_не работает
-const getHashtagRegular = (value) => (hashtagsFeatures.REGULAR.test(value));
-pristine.addValidator(inputHashtags, getHashtagRegular, errorMessages.BAG_SYMBOL_MESSAGE);
+//Проверка наличия повторного хэштега
+pristine.addValidator(inputHashtags, () => {
+  const hashtagsArr = stringToArray(inputHashtags.value.toLowerCase(), SPACE_HASHTAG_SEPARATOR);
+  const newArrDublicates = Array.from(hashtagsArr);
+  let duplicateExists = true;
+  for (let i = 0; i <= hashtagsArr.length; i++) {
+    if (!(hashtagsArr[i] in newArrDublicates)) {
+      newArrDublicates[hashtagsArr[i]] = true;
+    } else {
+      duplicateExists = false;
+    }
+  }
+  return duplicateExists;
+}, errorMessages.UNIQUE);
 
-//Проверка пробелов между хэштегами_работает
-const getHashtagSpace = (value) => (value.split('#').length - 1 > 1);
-pristine.addValidator(inputHashtags, getHashtagSpace, errorMessages.SPACE_HASHTAGS);
+//Проверка количества введенных хештегов
+pristine.addValidator(inputHashtags, (value) => {
+  if (!(value.split(' ').length > hashtagsFeatures.MAX_NUMBER)) {
+    return true;
+  }
+  return false;
+}, errorMessages.OVER_MAX);
 
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+//Проверка ввода недопустимых регулярных символов
+pristine.addValidator(inputHashtags, (value) => {
+  if (hashtagsFeatures.REGULAR.test(value)) {
+    return true;
+  }
+  return false;
+}, errorMessages.BAG_SYMBOL_MESSAGE);
+
+//Проверка пробелов между хэштегами
+pristine.addValidator(inputHashtags, (value) => {
+  if (value.split('#').length - 1 > 1) {
+    return true;
+  }
+  return false;
+}, errorMessages.SPACE_HASHTAGS);
