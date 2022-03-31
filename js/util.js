@@ -16,7 +16,6 @@ const getRandom = (min, max) => {
 
 // Функция для проверки максимальной длины строки. Будет использоваться для проверки длины введённого комментария, но должна быть универсальна
 const getLength = (stringChecked, maxLength) => stringChecked.length <= maxLength;
-getLength('Проверка', 24);
 
 //Генерация числа из массива
 let RandomNumber;
