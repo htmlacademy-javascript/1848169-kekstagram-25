@@ -1,11 +1,12 @@
 import {getEscapeEvent} from './util.js';
+import './validation.js';
 
 //Описание переменных
-const body = document.querySelector('body');
+const body = document.body;
 const uploadFileInput = document.querySelector('#upload-file');
 const uploadForm = document.querySelector('.img-upload__form');
 const editImageOverlay = document.querySelector('.img-upload__overlay');
-const editImageCloseButton = editImageOverlay.querySelector('img-upload__cancel');
+const editImageCloseButton = editImageOverlay.querySelector('.img-upload__cancel');
 const inputHashtags = document.querySelector('.text__hashtags');
 const commentTextarea = document.querySelector('.text__description');
 
