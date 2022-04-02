@@ -29,7 +29,7 @@ const MAX_LIKES = 200;
 const MIN_AVATAR= 1;
 const MAX_AVATAR = 6;
 const MIN_OBJECT = 1;
-const MAX_OBJECT = 6;
+const MAX_OBJECT = 15;
 const OBJECT_COUNT = 25;
 
 //Функции по созданию случайных чисел по заданным параметрам
