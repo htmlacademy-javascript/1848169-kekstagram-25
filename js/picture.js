@@ -1,4 +1,4 @@
-import {showBigPictureObject} from './big-pictures.js';
+import {showBigPhoto} from './big-pictures.js';
 
 // Находим фрагмент шаблона фотографии
 const templateFragment = document.querySelector('#picture')
@@ -15,7 +15,7 @@ const getPhotoItem = (photoObject) => {
   photoItem.querySelector('.picture__likes').textContent = photoObject.likes;
   photoItem.querySelector('.picture__comments').textContent = photoObject.comments.length;
   photoItem.addEventListener('click', () => {
-    showBigPictureObject(photoObject);
+    showBigPhoto(photoObject);
   });
   return photoItem;
 };
