@@ -1,10 +1,3 @@
-// При нажатии на кнопки .scale__control--smaller и .scale__control--bigger должно изменяться значение поля .scale__control--value;
-// Значение должно изменяться с шагом в 25. Например, если значение поля установлено в 50%, после нажатия на «+»,
-// значение должно стать равным 75%. Максимальное значение — 100%, минимальное — 25%. Значение по умолчанию — 100%;
-// При изменении значения поля .scale__control--value изображению внутри .img-upload__preview должен добавляться
-// соответствующий стиль CSS, который с помощью трансформации scale задаёт масштаб. Например, если в поле стоит
-// значение 75%, то в стиле изображения должно быть написано transform: scale(0.75).
-
 //Описываем переменные
 const minScaleButton = document.querySelector('.scale__control--smaller');
 const maxScaleButton = document.querySelector('.scale__control--bigger');
@@ -17,16 +10,16 @@ const MIN_SCALE_VALUE = 25;
 const MAX_SCALE_VALUE = 100;
 
 //Преобразование значения масштаба в целое число c указанной системой счисления
-const transformValue = () => parseInt(imageScaleValue.value, 10);
+const getTransformValue = () => parseInt(imageScaleValue.value, 10);
 
 //Преобразование масштаба в разметке
-const getScaleImage = () => {
+const getScaleImageTransform = () => {
   image.style.transform = `scale(${(parseInt(imageScaleValue.value, 10)/100)})`;
 };
 
 //Уменьшение масштаба изоабражения
-const lowerValueScale = () => {
-  let resultValue = transformValue() - SCALE_STEP;
+const getlowerValueScale = () => {
+  let resultValue = getTransformValue() - SCALE_STEP;
   if (resultValue < MIN_SCALE_VALUE) {
     resultValue = MIN_SCALE_VALUE;
   } else {
@@ -35,8 +28,8 @@ const lowerValueScale = () => {
 };
 
 //Увеличение масштаба изоабражения
-const higherValueScale = () => {
-  let resultValue = transformValue() + SCALE_STEP;
+const gethigherValueScale = () => {
+  let resultValue = getTransformValue() + SCALE_STEP;
   if(resultValue > MAX_SCALE_VALUE) {
     resultValue = MAX_SCALE_VALUE;
   }
@@ -45,14 +38,14 @@ const higherValueScale = () => {
 
 //Обработчик нажатия на клавишу 'уменьшение масштаба'
 function onMinButtonClick () {
-  lowerValueScale();
-  getScaleImage();
+  getlowerValueScale();
+  getScaleImageTransform();
 }
 
 //Обработчик нажатия на клавишу 'увеличение масштаба'
 function onMaxButtonClick() {
-  higherValueScale();
-  getScaleImage();
+  gethigherValueScale();
+  getScaleImageTransform();
 }
 
 //Создаем события на кнопки изменения масштаба
