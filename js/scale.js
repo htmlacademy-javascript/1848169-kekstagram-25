@@ -44,19 +44,17 @@ const higherValueScale = () => {
 };
 
 //Обработчик нажатия на клавишу 'уменьшение масштаба'
-function onClickMinButton () {
+function onMinButtonClick () {
   lowerValueScale();
   getScaleImage();
 }
 
 //Обработчик нажатия на клавишу 'увеличение масштаба'
-function onClickMaxButton () {
+function onMaxButtonClick() {
   higherValueScale();
   getScaleImage();
 }
 
-//Создаем события на кнопку изменения масштаба
-minScaleButton.addEventListener('click', onClickMinButton);
-maxScaleButton.addEventListener('click', onClickMaxButton);
-
-
+//Создаем события на кнопки изменения масштаба
+minScaleButton.addEventListener('click', onMinButtonClick);
+maxScaleButton.addEventListener('click', onMaxButtonClick);

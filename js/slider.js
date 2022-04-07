@@ -1,83 +1,76 @@
-// При смене эффекта, выбором одного из значений среди радиокнопок .effects__radio, добавить картинке внутри
-// .img-upload__preview CSS-класс, соответствующий эффекту. Например, если выбран эффект .effect-chrome, изображению
-// нужно добавить класс effects__preview--chrome.
-// 2.2. Наложение эффекта на изображение:
-
-// По умолчанию должен быть выбран эффект «Оригинал».
-// На изображение может накладываться только один эффект.
-
-// Интенсивность эффекта регулируется перемещением ползунка в слайдере. Слайдер реализуется сторонней библиотекой
-// для реализации слайдеров noUiSlider. Уровень эффекта записывается в поле .effect-level__value. При изменении уровня
-// интенсивности эффекта (предоставляется API слайдера), CSS-стили картинки внутри .img-upload__preview обновляются
-// следующим образом:
-// Для эффекта «Хром» — filter: grayscale(0..1) с шагом 0.1;
-// Для эффекта «Сепия» — filter: sepia(0..1) с шагом 0.1;
-// Для эффекта «Марвин» — filter: invert(0..100%) с шагом 1%;
-// Для эффекта «Фобос» — filter: blur(0..3px) с шагом 0.1px;
-// Для эффекта «Зной» — filter: brightness(1..3) с шагом 0.1;
-// Для эффекта «Оригинал» CSS-стили filter удаляются.
-// При выборе эффекта «Оригинал» слайдер скрывается.
-// При переключении эффектов, уровень насыщенности сбрасывается до начального значения (100%): слайдер,
-// CSS-стиль изображения и значение поля должны обновляться
-//Объекты выбранных фильтров
-//Описание переменных
+//Описание переменных для реализации слайдера
 const imagePreview = document.querySelector('.img-upload__preview');
-// const effectsButton = document.querySelector('.effects__radio');
-// const effectField = document.querySelector('.effects');
 const image = imagePreview.querySelector('img');
 const sliderElement = document.querySelector('.effect-level__slider');
-// const valueElement = document.querySelector('.effect-level__value');
+const valueElement = document.querySelector('.effect-level__value');
 const effectsList = document.querySelector('.effects__list');
+let effectFilter;
+
+//Создание объекта дяннах с парамтерами эффектов
 const effects = {
-  none:'',
+  none: {
+    range: {
+      min: 0,
+      max: 10,
+    },
+    start: 10,
+    step: 1,
+    filter: 'none',
+    unit: ''
+  },
   chrome: {
     range: {
       min: 0,
       max: 1,
     },
-    start: 0,
+    start: 1,
     step: 0.1,
-    connect: 'lower',
+    filter: 'grayscale',
+    unit: ''
   },
   sepia: {
     range: {
       min: 0,
       max: 1,
     },
-    start: 0,
+    start: 1,
     step: 0.1,
-    connect: 'lower',
+    filter: 'sepia',
+    unit: ''
   },
   marvin: {
     range: {
       min: 0,
       max: 100,
     },
-    start: 0,
+    start: 100,
     step: 1,
-    connect: 'lower',
+    filter: 'invert',
+    unit: '%',
   },
   phobos: {
     range: {
       min: 0,
       max: 3,
     },
-    start: 0,
+    start: 3,
     step: 0.1,
-    connect: 'lower',
+    filter: 'blur',
+    unit: 'px',
   },
   heat: {
     range: {
       min: 1,
       max: 3,
     },
-    start: 0,
+    start: 3,
     step: 0.1,
-    connect: 'lower',
-  }
+    filter: 'brightness',
+    unit: '',
+  },
 };
 
-// Cлайдер регулирования эффектов
+// Создание слайдера регулировки эффектов
 noUiSlider.create(sliderElement, {
   range: {
     min: 0,
@@ -96,33 +89,24 @@ noUiSlider.create(sliderElement, {
     from: (value) => parseFloat(value)
   }
 });
-let effect;
 
-// Событие клика на радиокнопку, выбор эффекта
+// Создаем событие клика на радиокнопку и выбор эффекта
 effectsList.addEventListener('click', (evt) => {
   if (evt.target.matches('.effects__radio')) {
-    effect = evt.target.value;
-    sliderElement.noUiSlider.updateOptions(effects[effect]);
+    const effect = evt.target.value;
+    effectFilter = effects[effect];
+    sliderElement.noUiSlider.updateOptions(effectFilter);
     image.classList = '';
     if (effect === 'none') {
-      const currentEffect = image.className;
-      image.classList.remove(currentEffect);
+      image.classList.remove('effects__preview--');
+      sliderElement.classList.add('hidden');
     } else {
       image.classList.add(`effects__preview--${effect}`);
+      sliderElement.classList.remove('hidden');
     }
   }
+  sliderElement.noUiSlider.on('update', () => {
+    valueElement.value = sliderElement.noUiSlider.get();
+    image.style.filter = `${effectFilter.filter}(${valueElement.value}${effectFilter.unit})`;
+  });
 });
-
-// Метод .format.to() нужен для форматирования значения из слайдера и вывода его где-либо.
-// Метод .format.from() нужен для форматирования значения для слайдера. Этот метод должен строго возвращать
-// число, поэтому используем parseFloat(), и достаточно.
-
-
-//Удаление слайдера
-// var hideSlider = function () {
-//   slider.classList.add('hidden');
-// };
-
-// sliderElement.setAttribute('disabled', true);
-
-// sliderElement.removeAttribute('disabled');
