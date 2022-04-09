@@ -4,7 +4,7 @@ const image = imagePreview.querySelector('img');
 const sliderElement = document.querySelector('.effect-level__slider');
 const valueElement = document.querySelector('.effect-level__value');
 const effectsList = document.querySelector('.effects__list');
-
+const sliderBlock = document.querySelector('.effect-level');
 
 //Создание объекта дяннах с парамтерами эффектов
 const effects = {
@@ -92,7 +92,7 @@ noUiSlider.create(sliderElement, {
 
 // Создаем событие клика на радиокнопку и выбор эффекта
 let effectFilter;
-sliderElement.classList.add('hidden');
+sliderBlock.classList.add('hidden');
 effectsList.addEventListener('click', (evt) => {
   if (evt.target.matches('.effects__radio')) {
     const effect = evt.target.value;
@@ -100,9 +100,9 @@ effectsList.addEventListener('click', (evt) => {
     sliderElement.noUiSlider.updateOptions(effectFilter);
     if (effect === 'none') {
       image.style.filter = '';
-      sliderElement.classList.add('hidden');
+      sliderBlock.classList.add('hidden');
     } else {
-      sliderElement.classList.remove('hidden');
+      sliderBlock.classList.remove('hidden');
     }
     sliderElement.noUiSlider.on('update', () => {
       valueElement.value = sliderElement.noUiSlider.get();
