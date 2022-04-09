@@ -24,7 +24,6 @@ function onUploadChange () {
 }
 uploadFileInput.addEventListener('change', onUploadChange);
 
-
 //Функция закрытия окна редактора
 const editImageOverlayClose = () => {
   editImageOverlay.classList.add('hidden');

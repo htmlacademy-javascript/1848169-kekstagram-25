@@ -4,17 +4,17 @@ const image = imagePreview.querySelector('img');
 const sliderElement = document.querySelector('.effect-level__slider');
 const valueElement = document.querySelector('.effect-level__value');
 const effectsList = document.querySelector('.effects__list');
-let effectFilter;
+
 
 //Создание объекта дяннах с парамтерами эффектов
 const effects = {
   none: {
     range: {
       min: 0,
-      max: 10,
+      max: 1,
     },
-    start: 10,
-    step: 1,
+    start: 1,
+    step: 0.1,
     filter: 'none',
     unit: ''
   },
@@ -91,22 +91,22 @@ noUiSlider.create(sliderElement, {
 });
 
 // Создаем событие клика на радиокнопку и выбор эффекта
+let effectFilter;
+sliderElement.classList.add('hidden');
 effectsList.addEventListener('click', (evt) => {
   if (evt.target.matches('.effects__radio')) {
     const effect = evt.target.value;
     effectFilter = effects[effect];
     sliderElement.noUiSlider.updateOptions(effectFilter);
-    image.classList = '';
     if (effect === 'none') {
-      image.classList.remove('effects__preview--');
+      image.style.filter = '';
       sliderElement.classList.add('hidden');
     } else {
-      image.classList.add(`effects__preview--${effect}`);
       sliderElement.classList.remove('hidden');
     }
+    sliderElement.noUiSlider.on('update', () => {
+      valueElement.value = sliderElement.noUiSlider.get();
+      image.style.filter = `${effectFilter.filter}(${valueElement.value}${effectFilter.unit})`;
+    });
   }
-  sliderElement.noUiSlider.on('update', () => {
-    valueElement.value = sliderElement.noUiSlider.get();
-    image.style.filter = `${effectFilter.filter}(${valueElement.value}${effectFilter.unit})`;
-  });
 });
