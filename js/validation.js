@@ -1,4 +1,6 @@
 import {getLength} from './util.js';
+import {showAlert} from './util.js';
+import {sendData} from './api.js';
 
 // Поиск классов для ввода текста и комментариев
 const uploadForm = document.querySelector('.img-upload__form');
@@ -41,11 +43,20 @@ const pristine = new Pristine(uploadForm, {
   errorTextClass: 'text'
 });
 
-//Обработчик отправки
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+//Обработчик отправки формы
+const setUserFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      sendData(
+        () => onSuccess(),
+        () => showAlert('Не удалось отправить форму. Попробуйте ещё раз'),
+        new FormData(evt.target),
+      );
+    }
+  });
+};
 
 //Функция деления строки хэштегов по указаннаму элементу separator
 const stringToArray = (string, separator) => string.split(separator);
@@ -74,7 +85,7 @@ pristine.addValidator(inputHashtags, () => {
   return hashtags.every((hashtag) => hashtag.startsWith('#'));
 }, errorMessages.HASH_SYMBOL);
 
-//Проверка на наличие ввода только символа #
+//Проверка на наличие ввода только символа '#'
 pristine.addValidator(inputHashtags, (value) => {
   if (value.match(hashtagsFeatures.IS_HASH_SYMBOL)) {
     return true;
@@ -112,3 +123,5 @@ pristine.addValidator(inputHashtags, (value) => {
   }
   return false;
 }, errorMessages.SPACE_HASHTAGS);
+
+export {setUserFormSubmit};

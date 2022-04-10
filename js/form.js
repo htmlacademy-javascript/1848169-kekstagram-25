@@ -45,3 +45,5 @@ function onImageOverlayEscPress (evt) {
     getEscapeEvent(evt, editImageOverlayClose);
   }
 }
+
+export {onImageOverlayClose};

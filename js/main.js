@@ -1,10 +1,14 @@
-import {getObjectOutput} from './data.js';
 import {createPhotosFragment} from './picture.js';
+import {onImageOverlayClose} from './form.js';
+import {setUserFormSubmit} from './validation.js';
+import {getData} from './api.js';
 import './form.js';
 import './scale.js';
 import './slider.js';
+import './validation.js';
 
-const photosData = getObjectOutput();
-createPhotosFragment(photosData);
+getData((photos) => {
+  createPhotosFragment(photos);
+});
 
-
+setUserFormSubmit(onImageOverlayClose);
