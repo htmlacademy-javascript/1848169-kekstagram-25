@@ -5,8 +5,8 @@ import {getData} from './api.js';
 import './form.js';
 import './scale.js';
 import './slider.js';
-import './validation.js';
 
+//Отправляем запрос на сервер
 getData((photos) => {
   createPhotosFragment(photos);
 });
