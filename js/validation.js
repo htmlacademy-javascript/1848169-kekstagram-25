@@ -1,6 +1,10 @@
 import {getLength} from './util.js';
 import {showAlert} from './util.js';
 import {sendData} from './api.js';
+import {onSuccessCloseForm} from './api.js';
+import {onErrorCloseForm} from './api.js';
+import {blockSubmitButton} from './api.js';
+import {unblockSubmitButton} from './api.js';
 
 // Поиск классов для ввода текста и комментариев
 const uploadForm = document.querySelector('.img-upload__form');
@@ -49,9 +53,17 @@ const setUserFormSubmit = (onSuccess) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
+      blockSubmitButton();
       sendData(
-        () => onSuccess(),
-        () => showAlert('Не удалось отправить форму. Попробуйте ещё раз'),
+        () => {
+          onSuccess();
+          onSuccessCloseForm();
+          unblockSubmitButton();
+        },
+        () => {
+          showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+          onErrorCloseForm();
+        },
         new FormData(evt.target),
       );
     }
@@ -118,7 +130,7 @@ pristine.addValidator(inputHashtags, (value) => {
 
 //Проверка пробелов между хэштегами
 pristine.addValidator(inputHashtags, (value) => {
-  if (value.split('#').length - 1 > 1) {
+  if (value.split('#').length > 1) {
     return true;
   }
   return false;
