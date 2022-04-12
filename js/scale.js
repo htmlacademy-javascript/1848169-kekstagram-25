@@ -56,4 +56,4 @@ function onMaxButtonClick() {
 minScaleButton.addEventListener('click', onMinButtonClick);
 maxScaleButton.addEventListener('click', onMaxButtonClick);
 
-export{getScaleImageTransform};
+export {getScaleImageTransform};
