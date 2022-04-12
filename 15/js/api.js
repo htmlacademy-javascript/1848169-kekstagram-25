@@ -11,6 +11,7 @@ const getData = (onSuccess) => {
       showAlert('Ошибка загрузки данных с сервера : - (');
     });
 };
+
 //Отправляем данные на сервер
 const sendData = (onSuccess, onFail, body) => {
   fetch(
@@ -18,17 +19,16 @@ const sendData = (onSuccess, onFail, body) => {
     {
       method: 'POST',
       body,
-    },
-  )
+    })
     .then((response) => {
       if (response.ok) {
-        onSuccess();
+        onSuccess(true);
       } else {
-        onFail('Не удалось отправить форму. Попробуйте ещё раз');
+        onFail();
       }
     })
     .catch(() => {
-      onFail('Не удалось отправить форму. Попробуйте ещё раз');
+      onFail();
     });
 };
 

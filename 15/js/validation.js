@@ -1,6 +1,6 @@
-import {getLength} from './util.js';
-import {showAlert} from './util.js';
+import {getLength, showAlert} from './util.js';
 import {sendData} from './api.js';
+import {onSuccessCloseForm, onErrorCloseForm, blockSubmitButton, unblockSubmitButton} from './form.js';
 
 // Поиск классов для ввода текста и комментариев
 const uploadForm = document.querySelector('.img-upload__form');
@@ -20,6 +20,7 @@ const hashtagsFeatures = {
   MAX: 20,
   REGULAR: /^#[A-Za-za-Яа-яЁё 0-9]{1,19}$/,
   IS_HASH_SYMBOL: /[^#]/,
+  IS_SPACE: /.#/g,
 };
 
 //Сообщания об ошибках
@@ -49,9 +50,18 @@ const setUserFormSubmit = (onSuccess) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
+      blockSubmitButton();
       sendData(
-        () => onSuccess(),
-        () => showAlert('Не удалось отправить форму. Попробуйте ещё раз'),
+        () => {
+          onSuccess();
+          onSuccessCloseForm();
+          unblockSubmitButton();
+        },
+        () => {
+          showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+          onErrorCloseForm();
+          unblockSubmitButton();
+        },
         new FormData(evt.target),
       );
     }
@@ -73,21 +83,21 @@ pristine.addValidator(inputHashtags, () => {
   return hashtags.every((hashtag) => hashtag.length <= hashtagsFeatures.MAX);
 }, errorMessages.HASHTAGS_LONG);
 
-//Проверка ввода недопустимых регулярных символов
+//Проверка ввода недопустимых регулярных символов----
 pristine.addValidator(inputHashtags, () => {
   const hashtags = stringToArray(inputHashtags.value.toLowerCase(), SPACE_HASHTAG_SEPARATOR);
-  return hashtags.every((hashtag) => hashtagsFeatures.REGULAR.test(hashtag));
+  return hashtags.every((hashtag) => (hashtagsFeatures.REGULAR.test(hashtag)) || (hashtag.length === 0));
 }, errorMessages.BAG_SYMBOL_MESSAGE);
 
-//Проверка на обязательное наличие первого символа '#'
+//Проверка на обязательное наличие первого символа '#'----
 pristine.addValidator(inputHashtags, () => {
   const hashtags = stringToArray(inputHashtags.value.toLowerCase(), SPACE_HASHTAG_SEPARATOR);
-  return hashtags.every((hashtag) => hashtag.startsWith('#'));
+  return hashtags.every((hashtag) => (hashtag.startsWith('#')) || (hashtag.length === 0));
 }, errorMessages.HASH_SYMBOL);
 
-//Проверка на наличие ввода только символа '#'
+//Проверка на наличие ввода только символа '#'----
 pristine.addValidator(inputHashtags, (value) => {
-  if (value.match(hashtagsFeatures.IS_HASH_SYMBOL)) {
+  if (value.match(hashtagsFeatures.IS_HASH_SYMBOL) || value.length === 0) {
     return true;
   }
   return false;
@@ -116,12 +126,10 @@ pristine.addValidator(inputHashtags, (value) => {
   return false;
 }, errorMessages.OVER_MAX);
 
-//Проверка пробелов между хэштегами
-pristine.addValidator(inputHashtags, (value) => {
-  if (value.split('#').length - 1 > 1) {
-    return true;
-  }
-  return false;
+//Проверка пробелов между хэштегами---
+pristine.addValidator(inputHashtags, () => {
+  const hashtags = stringToArray(inputHashtags.value.toLowerCase(), SPACE_HASHTAG_SEPARATOR);
+  return hashtags.every((hashtag) => (hashtagsFeatures.REGULAR.test(hashtag) || hashtag.length === 0));
 }, errorMessages.SPACE_HASHTAGS);
 
 export {setUserFormSubmit};
