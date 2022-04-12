@@ -55,4 +55,4 @@ function onImageOverlayEscPress (evt) {
   }
 }
 
-export {onImageOverlayClose};
+export {onImageOverlayClose, editImageOverlayClose};

@@ -1,10 +1,10 @@
 import {showAlert} from './util.js';
 import {getEscapeEvent} from './util.js';
+import {editImageOverlayClose} from './form.js';
 
 //Описание переменных
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
 const main = document.querySelector('main');
 
 // Создаем фрагмент сообщения об успешной отправке
@@ -23,7 +23,7 @@ const createSuccessMessage = () => {
 //Закрытие сообщения об успешной отправке
 const closeSuccessMessage = () => {
   const successOverlay = document.querySelector('.success');
-  const successMessageButton = document.querySelector('.success__button');
+  const successMessageButton = successTemplate.querySelector('.success__button');
   successMessageButton.removeEventListener('click', onSuccessMessageCloseClick);
   document.removeEventListener('keydown', onSuccessMessageEscPress);
   main.removeChild(successOverlay);
@@ -38,18 +38,17 @@ function onSuccessMessageCloseClick () {
 const unblockSubmitButton = () => {
   const uploadFormButton = document.querySelector('.img-upload__submit');
   uploadFormButton.disabled = false;
-  uploadFormButton.textContent = 'Опубликовать';
+  uploadFormButton.textContent = 'опубликовать';
 };
 
 //Обработчик закрытия успешной отправки формы
 const onSuccessCloseForm = () => {
   createSuccessMessage();
   const successOverlay = document.querySelector('.success');
-  const successMessageButton = document.querySelector('.success__button');
+  const successMessageButton = successTemplate.querySelector('.success__button');
   document.addEventListener('keydown', onSuccessMessageEscPress);
   successMessageButton.addEventListener('click', onSuccessMessageCloseClick);
   const successField = document.querySelector('.success__inner');
-  unblockSubmitButton();
   successOverlay.addEventListener('click', (evt) => {
     if (evt.target !== successField) {
       closeSuccessMessage();
@@ -71,6 +70,7 @@ function onSuccessMessageEscPress (evt) {
 
 // Создание сообщения об ошибке при отправке формы
 const createErrorMessage = () => {
+  editImageOverlayClose();
   createStatusMessage(errorTemplate);
 };
 
@@ -97,7 +97,7 @@ function onErrorMessageEscPress (evt) {
 const onErrorCloseForm = () => {
   createErrorMessage();
   const errorOverlay = document.querySelector('.error');
-  const errorMessageButton = errorOverlay.querySelector('.error__button');
+  const errorMessageButton = errorTemplate.querySelector('.error__button');
   document.addEventListener('keydown', onErrorMessageEscPress);
   errorMessageButton.addEventListener('click', onErrorMessageCloseClick);
   const errorField = document.querySelector('.error__inner');
@@ -123,7 +123,7 @@ const getData = (onSuccess) => {
 //Отправляем данные на сервер
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    'https://25.javascript.pages.academy/kekstagram',
+    'https://25.javascript.pages.academy/kekstagramv',
     {
       method: 'POST',
       body,
