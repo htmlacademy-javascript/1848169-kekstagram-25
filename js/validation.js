@@ -1,10 +1,6 @@
-import {getLength} from './util.js';
-import {showAlert} from './util.js';
+import {getLength, showAlert} from './util.js';
 import {sendData} from './api.js';
-import {onSuccessCloseForm} from './api.js';
-import {onErrorCloseForm} from './api.js';
-import {blockSubmitButton} from './api.js';
-import {unblockSubmitButton} from './api.js';
+import {onSuccessCloseForm, onErrorCloseForm, blockSubmitButton, unblockSubmitButton} from './form.js';
 
 // Поиск классов для ввода текста и комментариев
 const uploadForm = document.querySelector('.img-upload__form');
