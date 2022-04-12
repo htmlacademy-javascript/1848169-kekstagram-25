@@ -32,9 +32,9 @@ const getlowerValueScale = () => {
 };
 
 //Увеличение масштаба изоабражения
-const gethigherValueScale = () => {
+const getHigherValueScale = () => {
   let resultValue = getTransformValue() + SCALE_STEP;
-  if(resultValue > MAX_SCALE_VALUE) {
+  if (resultValue > MAX_SCALE_VALUE) {
     resultValue = MAX_SCALE_VALUE;
   }
   imageScaleValue.value = `${resultValue}%`;
@@ -48,10 +48,14 @@ function onMinButtonClick () {
 
 //Обработчик нажатия на клавишу 'увеличение масштаба'
 function onMaxButtonClick() {
-  gethigherValueScale();
+  getHigherValueScale();
   getScaleImageTransform();
 }
 
 //Создаем события на кнопки изменения масштаба
 minScaleButton.addEventListener('click', onMinButtonClick);
 maxScaleButton.addEventListener('click', onMaxButtonClick);
+
+export {getScaleImageTransform};
+
+
