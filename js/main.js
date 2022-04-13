@@ -5,6 +5,7 @@ import {getData} from './api.js';
 import './form.js';
 import './scale.js';
 import './slider.js';
+import './filters.js';
 
 //Отправляем запрос на сервер
 getData((photos) => {
