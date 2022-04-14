@@ -78,4 +78,13 @@ const mixPhotosArray = (array) => {
   return array;
 };
 
-export {getRandom, getRandomNumber, getLength, getEscapeEvent, showAlert, mixPhotosArray};
+//Устранение дребезга списка фотографий
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandom, getRandomNumber, getLength, getEscapeEvent, showAlert, mixPhotosArray, debounce};
