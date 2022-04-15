@@ -1,4 +1,4 @@
-//Описание переменных
+// Описание переменных
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const editImageOverlay = document.querySelector('.img-upload__overlay');
 const imagePreview = editImageOverlay.querySelector('.img-upload__preview');
