@@ -41,7 +41,7 @@ const getObjectsNumber = () => getRandomNumber(MIN_OBJECT, MAX_OBJECT);
 
 //Функция создания массива объектов коментариев
 const getObjectsArray = () => {
-  const ObjectsArray = [];
+  const objectsArray = [];
   for (let i = 1; i <= getObjectsNumber(); i++) {
     const CommentsObject = {
       id: i,
@@ -49,9 +49,9 @@ const getObjectsArray = () => {
       message: COMMENTS[getCommentsNumber()],
       name: NAMES[getNamesNumber()],
     };
-    ObjectsArray.push(CommentsObject);
+    objectsArray.push(CommentsObject);
   }
-  return ObjectsArray;
+  return objectsArray;
 };
 
 //Функция формирования объекта описания фото и комментария из массива

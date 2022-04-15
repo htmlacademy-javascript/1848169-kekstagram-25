@@ -8,7 +8,7 @@ const uploadForm = document.querySelector('.img-upload__form');
 const editImageOverlay = document.querySelector('.img-upload__overlay');
 const editImageCloseButton = editImageOverlay.querySelector('.img-upload__cancel');
 const inputHashtags = document.querySelector('.text__hashtags');
-const commentTextarea = document.querySelector('.text__description');
+const commentTextArea = document.querySelector('.text__description');
 const imageScaleValue = document.querySelector('.scale__control--value');
 const DEFAULT_SCALE_VALUE = 100;
 const imagePreview = document.querySelector('.img-upload__preview');
@@ -52,7 +52,7 @@ function onImageOverlayClose () {
 //Функция закрытия окна редактора по ESC
 function onImageOverlayEscPress (evt) {
   const active = document.activeElement;
-  if (inputHashtags !== active && commentTextarea !== active) {
+  if (inputHashtags !== active && commentTextArea !== active) {
     getEscapeEvent(evt, editImageOverlayClose);
   }
 }
