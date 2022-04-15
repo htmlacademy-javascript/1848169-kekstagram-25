@@ -1,5 +1,5 @@
 import {mixPhotosArray} from './util.js';
-import {debounce} from './debounce.js';
+import {debounce} from './util.js';
 import {getData} from './api.js';
 import {createPhotosFragment} from './picture.js';
 
@@ -9,7 +9,7 @@ const discussedFilter = filterBlock.querySelector('#filter-discussed');
 const randomFilter = filterBlock.querySelector('#filter-random');
 const defaultFilter = filterBlock.querySelector('#filter-default');
 const RANDOM_PHOTOS = 10;
-const timeoutDelay = 500;
+const TIMEOUT_DELAY = 500;
 let photosArray;
 
 //Переключение класса активной кнопки
@@ -74,7 +74,7 @@ const onFilterClick = debounce((evt) => {
     default:
       getDefaultPhotos();
   }
-}, timeoutDelay);
+}, TIMEOUT_DELAY);
 
 filterBlock.addEventListener('click', onFilterClick);
 
