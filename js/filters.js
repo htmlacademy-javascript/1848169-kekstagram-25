@@ -5,6 +5,7 @@ import {createPhotosFragment} from './picture.js';
 
 // Описание переменных
 const filterBlock = document.querySelector('.img-filters');
+const filterBlockForm = filterBlock.querySelector('.img-filters__form');
 const discussedFilter = filterBlock.querySelector('#filter-discussed');
 const randomFilter = filterBlock.querySelector('#filter-random');
 const defaultFilter = filterBlock.querySelector('#filter-default');
@@ -76,7 +77,7 @@ const onFilterClick = debounce((evt) => {
   }
 }, TIMEOUT_DELAY);
 
-filterBlock.addEventListener('click', onFilterClick);
+filterBlockForm.addEventListener('click', onFilterClick);
 
 const receiveData = (photos) => {
   photosArray = photos;
