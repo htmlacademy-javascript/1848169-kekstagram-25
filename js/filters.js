@@ -4,18 +4,18 @@ import {getData} from './api.js';
 import {createPhotosFragment} from './picture.js';
 
 // Описание переменных
-const filterBlock = document.querySelector('.img-filters');
-const filterBlockForm = filterBlock.querySelector('.img-filters__form');
-const discussedFilter = filterBlock.querySelector('#filter-discussed');
-const randomFilter = filterBlock.querySelector('#filter-random');
-const defaultFilter = filterBlock.querySelector('#filter-default');
+const filterBlockNode = document.querySelector('.img-filters');
+const filterBlockFormNode = filterBlockNode.querySelector('.img-filters__form');
+const discussedFilterNode = filterBlockNode.querySelector('#filter-discussed');
+const randomFilterNode = filterBlockNode.querySelector('#filter-random');
+const defaultFilterNode = filterBlockNode.querySelector('#filter-default');
 const RANDOM_PHOTOS = 10;
 const TIMEOUT_DELAY = 500;
 let photosArray;
 
-//Переключение класса активной кнопки
+// Переключение класса активной кнопки
 const setActiveClass = (element) => {
-  const activeButton = filterBlock.querySelector('.img-filters__button--active');
+  const activeButton = filterBlockNode.querySelector('.img-filters__button--active');
   if (activeButton) {
     activeButton.classList.remove('img-filters__button--active');
   }
@@ -63,13 +63,13 @@ const onFilterClick = debounce((evt) => {
   removePhotos();
   setActiveClass(target);
   switch (target) {
-    case randomFilter:
+    case randomFilterNode:
       getRandomPhotos();
       break;
-    case defaultFilter:
+    case defaultFilterNode:
       getDefaultPhotos();
       break;
-    case discussedFilter:
+    case discussedFilterNode:
       getPhotosDiscussed();
       break;
     default:
@@ -77,12 +77,12 @@ const onFilterClick = debounce((evt) => {
   }
 }, TIMEOUT_DELAY);
 
-filterBlockForm.addEventListener('click', onFilterClick);
+filterBlockFormNode.addEventListener('click', onFilterClick);
 
 const receiveData = (photos) => {
   photosArray = photos;
   createPhotosFragment(photos);
-  filterBlock.classList.remove('img-filters--inactive');
+  filterBlockNode.classList.remove('img-filters--inactive');
 };
 
 getData(receiveData);

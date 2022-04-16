@@ -1,13 +1,13 @@
 //Описание переменных для реализации слайдера
-const imagePreview = document.querySelector('.img-upload__preview');
-const image = imagePreview.querySelector('img');
-const sliderElement = document.querySelector('.effect-level__slider');
-const valueElement = document.querySelector('.effect-level__value');
-const effectsList = document.querySelector('.effects__list');
-const sliderBlock = document.querySelector('.effect-level');
+const imagePreviewNode = document.querySelector('.img-upload__preview');
+const imageNode = imagePreviewNode.querySelector('img');
+const sliderElementNode = document.querySelector('.effect-level__slider');
+const valueElementNode = document.querySelector('.effect-level__value');
+const effectsListNode = document.querySelector('.effects__list');
+const sliderBlockNode = document.querySelector('.effect-level');
 
-//Создание объекта дяннах с парамтерами эффектов
-const effects = {
+// Создание объекта дяннах с парамтерами эффектов
+const Effects = {
   none: {
     range: {
       min: 0,
@@ -71,7 +71,7 @@ const effects = {
 };
 
 // Создание слайдера регулировки эффектов
-noUiSlider.create(sliderElement, {
+noUiSlider.create(sliderElementNode, {
   range: {
     min: 0,
     max: 1,
@@ -92,21 +92,21 @@ noUiSlider.create(sliderElement, {
 
 // Создаем событие клика на радиокнопку и выбор эффекта
 let effectFilter;
-sliderBlock.classList.add('hidden');
-effectsList.addEventListener('click', (evt) => {
+sliderBlockNode.classList.add('hidden');
+effectsListNode.addEventListener('click', (evt) => {
   if (evt.target.matches('.effects__radio')) {
     const effect = evt.target.value;
-    effectFilter = effects[effect];
-    sliderElement.noUiSlider.updateOptions(effectFilter);
+    effectFilter = Effects[effect];
+    sliderElementNode.noUiSlider.updateOptions(effectFilter);
     if (effect === 'none') {
-      image.style.filter = '';
-      sliderBlock.classList.add('hidden');
+      imageNode.style.filter = '';
+      sliderBlockNode.classList.add('hidden');
     } else {
-      sliderBlock.classList.remove('hidden');
+      sliderBlockNode.classList.remove('hidden');
     }
-    sliderElement.noUiSlider.on('update', () => {
-      valueElement.value = sliderElement.noUiSlider.get();
-      image.style.filter = `${effectFilter.filter}(${valueElement.value}${effectFilter.unit})`;
+    sliderElementNode.noUiSlider.on('update', () => {
+      valueElementNode.value = sliderElementNode.noUiSlider.get();
+      imageNode.style.filter = `${effectFilter.filter}(${valueElementNode.value}${effectFilter.unit})`;
     });
   }
 });
