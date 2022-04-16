@@ -19,10 +19,10 @@ const getPhotoItem = (photoObject) => {
 
 // Создание вставки шаблона в фрагмент документа
 const createPhotosFragment = (photos) => {
-  for (let i = 0; i < photos.length; i++) {
-    const photoElement = getPhotoItem(photos[i]);
+  photos.forEach((photo)=> {
+    const photoElement = getPhotoItem(photo);
     fragmentNode.appendChild(photoElement);
-  }
+  });
   photosBlockNode.appendChild(fragmentNode);
 };
 
