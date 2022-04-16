@@ -1,6 +1,6 @@
 import {showAlert} from './util.js';
 
-//Отправляем запрос на сервер
+// Отправляем запрос на сервер
 const getData = (onSuccess) => {
   fetch('https://25.javascript.pages.academy/kekstagram/data')
     .then((response) => response.json())
@@ -12,7 +12,7 @@ const getData = (onSuccess) => {
     });
 };
 
-//Отправляем данные на сервер
+// Отправляем данные на сервер
 const sendData = (onSuccess, onFail, body) => {
   fetch(
     'https://25.javascript.pages.academy/kekstagram',

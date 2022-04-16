@@ -43,13 +43,13 @@ const getObjectsNumber = () => getRandomNumber(MIN_OBJECT, MAX_OBJECT);
 const getObjectsArray = () => {
   const objectsArray = [];
   for (let i = 1; i <= getObjectsNumber(); i++) {
-    const CommentsObject = {
+    const commentsObject = {
       id: i,
       avatar: `img/avatar-${getAvatarNumber()}.svg`,
       message: COMMENTS[getCommentsNumber()],
       name: NAMES[getNamesNumber()],
     };
-    objectsArray.push(CommentsObject);
+    objectsArray.push(commentsObject);
   }
   return objectsArray;
 };

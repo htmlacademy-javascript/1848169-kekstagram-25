@@ -1,29 +1,29 @@
 import {showBigPhoto} from './big-pictures.js';
 
 // Описание переменных
-const templateFragment = document.querySelector('#picture').content.querySelector('.picture');
-const fragment = document.createDocumentFragment();
-const photosBlock = document.querySelector('.pictures');
+const templateFragmentNode = document.querySelector('#picture').content.querySelector('.picture');
+const fragmentNode = document.createDocumentFragment();
+const photosBlockNode = document.querySelector('.pictures');
 
 // Заполнение шаблона документа
 const getPhotoItem = (photoObject) => {
-  const photoItem = templateFragment.cloneNode(true);
-  photoItem.querySelector('.picture__img').src = photoObject.url;
-  photoItem.querySelector('.picture__likes').textContent = photoObject.likes;
-  photoItem.querySelector('.picture__comments').textContent = photoObject.comments.length;
-  photoItem.addEventListener('click', () => {
+  const photoItemNode = templateFragmentNode.cloneNode(true);
+  photoItemNode.querySelector('.picture__img').src = photoObject.url;
+  photoItemNode.querySelector('.picture__likes').textContent = photoObject.likes;
+  photoItemNode.querySelector('.picture__comments').textContent = photoObject.comments.length;
+  photoItemNode.addEventListener('click', () => {
     showBigPhoto(photoObject);
   });
-  return photoItem;
+  return photoItemNode;
 };
 
-//Создание вставки шаблона в фрагмент документа
+// Создание вставки шаблона в фрагмент документа
 const createPhotosFragment = (photos) => {
   for (let i = 0; i < photos.length; i++) {
     const photoElement = getPhotoItem(photos[i]);
-    fragment.appendChild(photoElement);
+    fragmentNode.appendChild(photoElement);
   }
-  photosBlock.appendChild(fragment);
+  photosBlockNode.appendChild(fragmentNode);
 };
 
 export {createPhotosFragment};

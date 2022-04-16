@@ -16,24 +16,23 @@ const getRandom = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-// Функция для проверки максимальной длины строки. Будет использоваться для проверки длины введённого комментария, но должна быть универсальна
+// Функция для проверки максимальной длины строки
 const getLength = (stringChecked, maxLength) => stringChecked.length <= maxLength;
 
-//Генерация числа из массива
-let RandomNumber;
+// Генерация числа из массива
+let randomNumber;
 const getRandomNumber = (min, max) => {
   const arr = [];
   for (let i = min; i < max; i++) {
-    RandomNumber = getRandom(min, max);
-    if (arr.includes(RandomNumber) === true) {
+    randomNumber = getRandom(min, max);
+    if (arr.includes(randomNumber) === true) {
       i = i - 1;
-    } else {
-      if (RandomNumber > max === false) {
-        arr.push(RandomNumber);
-      }
+    }
+    if (randomNumber > max === false) {
+      arr.push(randomNumber);
     }
   }
-  return RandomNumber;
+  return randomNumber;
 };
 
 // Функция закрытия окна по Escape
@@ -43,7 +42,7 @@ const getEscapeEvent = (evt, action) => {
   }
 };
 
-//Показ сообщения об отправке с ошибкой на 5 секунд
+// Показ сообщения об отправке с ошибкой на 5 секунд
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
@@ -78,7 +77,7 @@ const mixPhotosArray = (array) => {
   return array;
 };
 
-//Устранение дребезга списка фотографий
+// Устранение дребезга списка фотографий
 const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
   return (...rest) => {

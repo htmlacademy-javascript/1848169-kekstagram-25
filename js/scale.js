@@ -1,34 +1,33 @@
 //Описываем переменные
-const minScaleButton = document.querySelector('.scale__control--smaller');
-const maxScaleButton = document.querySelector('.scale__control--bigger');
-const imageScaleValue = document.querySelector('.scale__control--value');
-const editImageOverlay = document.querySelector('.img-upload__overlay');
-const imagePreview = editImageOverlay.querySelector('.img-upload__preview');
-const image = imagePreview.querySelector('img');
+const minScaleButtonNode = document.querySelector('.scale__control--smaller');
+const maxScaleButtonNode = document.querySelector('.scale__control--bigger');
+const imageScaleValueNode = document.querySelector('.scale__control--value');
+const editImageOverlayNode = document.querySelector('.img-upload__overlay');
+const imagePreviewNode = editImageOverlayNode.querySelector('.img-upload__preview');
+const imageNode = imagePreviewNode.querySelector('img');
 const SCALE_STEP = 25;
 const MIN_SCALE_VALUE = 25;
 const MAX_SCALE_VALUE = 100;
 const DEFAULT_SCALE_VALUE = 100;
 
-//Установка значения масштаба по умолчанию на 100%
-imageScaleValue.value = `${DEFAULT_SCALE_VALUE}%`;
+// Установка значения масштаба по умолчанию на 100%
+imageScaleValueNode.value = `${DEFAULT_SCALE_VALUE}%`;
 
-//Преобразование значения масштаба в целое число c указанной системой счисления
-const getTransformValue = () => parseInt(imageScaleValue.value, 10);
+// Преобразование значения масштаба в целое число c указанной системой счисления
+const getTransformValue = () => parseInt(imageScaleValueNode.value, 10);
 
-//Преобразование масштаба в разметке
+// Преобразование масштаба в разметке
 const getScaleImageTransform = () => {
-  image.style.transform = `scale(${(parseInt(imageScaleValue.value, 10)/100)})`;
+  imageNode.style.transform = `scale(${(parseInt(imageScaleValueNode.value, 10)/100)})`;
 };
 
-//Уменьшение масштаба изоабражения
-const getlowerValueScale = () => {
+// Уменьшение масштаба изоабражения
+const getLowerValueScale = () => {
   let resultValue = getTransformValue() - SCALE_STEP;
   if (resultValue < MIN_SCALE_VALUE) {
     resultValue = MIN_SCALE_VALUE;
-  } else {
-    imageScaleValue.value = `${resultValue}%`;
   }
+  imageScaleValueNode.value = `${resultValue}%`;
 };
 
 //Увеличение масштаба изоабражения
@@ -37,12 +36,12 @@ const getHigherValueScale = () => {
   if (resultValue > MAX_SCALE_VALUE) {
     resultValue = MAX_SCALE_VALUE;
   }
-  imageScaleValue.value = `${resultValue}%`;
+  imageScaleValueNode.value = `${resultValue}%`;
 };
 
 //Обработчик нажатия на клавишу 'уменьшение масштаба'
 function onMinButtonClick () {
-  getlowerValueScale();
+  getLowerValueScale();
   getScaleImageTransform();
 }
 
@@ -53,8 +52,8 @@ function onMaxButtonClick() {
 }
 
 //Создаем события на кнопки изменения масштаба
-minScaleButton.addEventListener('click', onMinButtonClick);
-maxScaleButton.addEventListener('click', onMaxButtonClick);
+minScaleButtonNode.addEventListener('click', onMinButtonClick);
+maxScaleButtonNode.addEventListener('click', onMaxButtonClick);
 
 export {getScaleImageTransform};
 
