@@ -27,6 +27,10 @@ const openImageEditOverlay = () => {
   getScaleImageTransform();
   image.style.filter = '';
   sliderBlock.classList.add('hidden');
+  const pristineErrorNode = document.querySelector('.pristine-error');
+  if (pristineErrorNode) {
+    pristineErrorNode.textContent = '';
+  }
 };
 
 // Обработчик открытия окна редактирования

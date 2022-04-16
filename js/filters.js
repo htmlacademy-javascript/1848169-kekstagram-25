@@ -15,17 +15,17 @@ let photosArray;
 
 // Переключение класса активной кнопки
 const setActiveClass = (element) => {
-  const activeButton = filterBlockNode.querySelector('.img-filters__button--active');
-  if (activeButton) {
-    activeButton.classList.remove('img-filters__button--active');
+  const activeButtonNode = filterBlockNode.querySelector('.img-filters__button--active');
+  if (activeButtonNode) {
+    activeButtonNode.classList.remove('img-filters__button--active');
   }
   element.classList.add('img-filters__button--active');
 };
 
 // Удаление фотографий
 const removePhotos =() => {
-  const photosArr = document.querySelectorAll('.pictures .picture');
-  photosArr.forEach((photo) => {
+  const photosArrNode = document.querySelectorAll('.pictures .picture');
+  photosArrNode.forEach((photo) => {
     photo.remove();
   });
 };

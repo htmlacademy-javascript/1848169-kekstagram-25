@@ -1,4 +1,4 @@
-//Описание переменных для реализации слайдера
+// Описание переменных для реализации слайдера
 const imagePreviewNode = document.querySelector('.img-upload__preview');
 const imageNode = imagePreviewNode.querySelector('img');
 const sliderElementNode = document.querySelector('.effect-level__slider');

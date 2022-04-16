@@ -15,11 +15,11 @@ let commentsCounter = 5;
 
 // Отрисовка одного комментария
 const getBigPictureComment = (comment) => {
-  const commentItem = commentElementNode.cloneNode(true);
-  commentItem.querySelector('.social__picture').src = comment.avatar;
-  commentItem.querySelector('.social__picture').alt = comment.name;
-  commentItem.querySelector('.social__text').textContent = comment.message;
-  return commentItem;
+  const commentItemNode = commentElementNode.cloneNode(true);
+  commentItemNode.querySelector('.social__picture').src = comment.avatar;
+  commentItemNode.querySelector('.social__picture').alt = comment.name;
+  commentItemNode.querySelector('.social__text').textContent = comment.message;
+  return commentItemNode;
 };
 
 // Создание фрагмента комментария
